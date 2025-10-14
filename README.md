@@ -111,10 +111,19 @@ See [IMAGE-SETUP.md](./IMAGE-SETUP.md) for instructions on adding custom images:
 
 ### Branding
 
-**Logo**: The official EternaGuard logo is located at `/public/images/eternaguard-logo.png`
-- Shield icon with drone, monument, and tree elements
-- Tagline: "SECURE. MAINTAIN. INNOVATE."
-- Used consistently across all pages
+**Logos**: EternaGuard has two logo versions for different use cases:
+
+1. **Square Logo** (`eternaguard-logo.png`) - 629KB
+   - Shield icon with drone, monument, and tree
+   - Text and tagline stacked vertically below shield
+   - Best for: Hero sections, large showcases, social media
+   - Current use: Brand showcase section
+
+2. **Wide Logo** (`eternaguard-logo-wide.png`) - 790KB
+   - Shield icon on left, text horizontal on right
+   - Includes tagline "SECURE. MAINTAIN. INNOVATE."
+   - Best for: Headers, footers, navigation, horizontal layouts
+   - Current use: All headers, footer, dashboard navigation
 
 **Colors**: The site uses a blue-to-emerald gradient color scheme matching the logo:
 - Primary: `blue-600` (#2563eb)
