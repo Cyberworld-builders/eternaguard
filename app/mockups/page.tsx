@@ -454,11 +454,11 @@ export default function MockupsPage() {
           <div className="flex justify-between items-center">
             <Link href="/" className="flex items-center space-x-3">
               <img 
-                src="/images/eternaguard-logo.png" 
-                alt="EternaGuard Logo" 
-                className="h-10 w-auto"
+                src="/images/eternaguard-logo-wide.png" 
+                alt="EternaGuard - Secure. Maintain. Innovate." 
+                className="h-8 w-auto"
               />
-              <span className="text-xl font-bold text-slate-700">Mockups</span>
+              <span className="text-lg font-bold text-slate-600">| Mockups</span>
             </Link>
             <Link
               href="/"

@@ -80,11 +80,11 @@ export default function CRMDashboard() {
             <div className="flex items-center space-x-4">
               <Link href="/" className="flex items-center space-x-3">
                 <img 
-                  src="/images/eternaguard-logo.png" 
-                  alt="EternaGuard Logo" 
-                  className="h-10 w-auto"
+                  src="/images/eternaguard-logo-wide.png" 
+                  alt="EternaGuard - Secure. Maintain. Innovate." 
+                  className="h-8 w-auto"
                 />
-                <span className="text-xl font-bold text-slate-700">CRM</span>
+                <span className="text-lg font-bold text-slate-600">| CRM</span>
               </Link>
             </div>
             <Link

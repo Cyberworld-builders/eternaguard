@@ -22,9 +22,9 @@ export default function Home() {
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-3">
               <img 
-                src="/images/eternaguard-logo.png" 
-                alt="EternaGuard Logo" 
-                className="h-12 w-auto"
+                src="/images/eternaguard-logo-wide.png" 
+                alt="EternaGuard - Secure. Maintain. Innovate." 
+                className="h-10 w-auto"
               />
             </div>
             <div className="hidden md:flex space-x-8">
@@ -538,6 +538,28 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Brand Showcase Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-slate-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center">
+            <div className="flex justify-center mb-8">
+              <div className="relative">
+                <img 
+                  src="/images/eternaguard-logo.png" 
+                  alt="EternaGuard - Secure. Maintain. Innovate." 
+                  className="w-auto h-48 sm:h-64 lg:h-80 drop-shadow-2xl"
+                />
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-700/10 via-emerald-600/10 to-slate-700/10 blur-3xl -z-10 scale-150"></div>
+              </div>
+            </div>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+              The future of property management starts here. Join us in revolutionizing death care and beyond.
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section id="contact" className="py-20 px-4 sm:px-6 lg:px-8 bg-slate-50">
         <div className="max-w-4xl mx-auto text-center">
@@ -565,31 +587,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Brand Showcase Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-slate-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center">
-            <div className="flex justify-center mb-8">
-              <div className="relative">
-                <img 
-                  src="/images/eternaguard-logo.png" 
-                  alt="EternaGuard - Secure. Maintain. Innovate." 
-                  className="w-auto h-48 sm:h-64 lg:h-80 drop-shadow-2xl"
-                />
-                {/* Glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-slate-700/10 via-emerald-600/10 to-slate-700/10 blur-3xl -z-10 scale-150"></div>
-              </div>
-            </div>
-            <p className="text-2xl sm:text-3xl font-bold text-slate-800 mb-4">
-              SECURE. MAINTAIN. INNOVATE.
-            </p>
-            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              The future of property management starts here. Join us in revolutionizing death care and beyond.
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Footer */}
       <footer className="bg-slate-900 text-white py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
@@ -597,9 +594,9 @@ export default function Home() {
             <div className="md:col-span-2">
               <div className="mb-6">
                 <img 
-                  src="/images/eternaguard-logo.png" 
+                  src="/images/eternaguard-logo-wide.png" 
                   alt="EternaGuard - Secure. Maintain. Innovate." 
-                  className="h-20 sm:h-24 w-auto"
+                  className="h-16 sm:h-20 w-auto"
                 />
               </div>
               <p className="text-slate-400 max-w-md">
