@@ -30,12 +30,17 @@ mmfh-landing-app/
 │   ├── mockups/
 │   │   └── page.tsx      # Mockup generator page
 │   ├── cms-dashboard/
-│   │   └── page.tsx      # CMS Dashboard demo
+│   │   ├── page.tsx      # CMS Dashboard demo
+│   │   └── new-post/
+│   │       └── page.tsx  # Blog post editor with rich text & preview
 │   └── crm-dashboard/
-│       └── page.tsx      # CRM Dashboard demo
+│       ├── page.tsx      # CRM Dashboard demo
+│       └── new-contract/
+│           └── page.tsx  # Cemetery Contract Wizard
 ├── public/
 │   └── images/
-│       ├── eternaguard-logo.png      # Official EternaGuard logo
+│       ├── eternaguard-logo.png      # Official EternaGuard logo (square)
+│       ├── eternaguard-logo-wide.png # Official EternaGuard logo (wide)
 │       ├── eternaguard-hero.png      # Hero section mockup
 │       └── eternaguard-overview.png  # Overview mockup
 ├── IMAGE-SETUP.md       # Instructions for adding images
@@ -54,7 +59,9 @@ mmfh-landing-app/
 - ✅ **TypeScript**: Fully typed for better development experience
 - ✅ **Built-in Mockup Generator**: Live mockup generator at `/mockups` route
 - ✅ **CMS Dashboard Demo**: Interactive analytics dashboard at `/cms-dashboard` route
+- ✅ **Blog Post Editor**: Rich text editor with live preview at `/cms-dashboard/new-post` route
 - ✅ **CRM Dashboard Demo**: Customer relationships and work orders at `/crm-dashboard` route
+- ✅ **Cemetery Contract Wizard**: Multi-step form with Stripe checkout at `/crm-dashboard/new-contract` route
 
 ## 📸 Mockups & Images
 
@@ -73,10 +80,28 @@ See [MOCKUP-INSTRUCTIONS.md](./MOCKUP-INSTRUCTIONS.md) for detailed docs.
 Visit **http://localhost:3000/cms-dashboard** to see the Phase 1 marketing features:
 - **Analytics Overview**: Google Analytics-style metrics with trends
 - **Social Media Campaigns**: Facebook, LinkedIn, Instagram, Twitter/X performance
+- **Campaign Creation Modal**: Click "+ Create Campaign" to launch a full-featured campaign builder
+  - Multi-platform selection (Facebook, Instagram, LinkedIn, Twitter/X)
+  - Budget and duration settings
+  - Target audience configuration
+  - Campaign type selection
+  - Ready for social media API integration
 - **SEO Metrics**: Organic traffic, keywords, backlinks, domain authority
 - **Content Management**: Blog post tracking with status indicators
 - **Top Pages**: Performance metrics for key landing pages
 - **Lead Generation**: Conversion tracking and cost per lead
+
+### Blog Post Editor
+Visit **http://localhost:3000/cms-dashboard/new-post** to create blog content:
+- **Rich Text Editor**: Markdown formatting with toolbar (bold, italic, headings, links, lists)
+- **Live Preview**: Toggle between edit and preview modes to see published appearance
+- **Featured Images**: Upload and preview featured images with drag-and-drop
+- **SEO Tools**: Keywords, meta descriptions, auto-slug generation from title
+- **Category Management**: Organize posts by category
+- **Social Sharing**: Built-in Facebook, Twitter, and LinkedIn share buttons
+- **Draft/Publish Workflow**: Save drafts or publish immediately
+- **Character Counters**: SEO-optimized length indicators for excerpts and meta
+- **Publish Scheduling**: Set publish dates and author attribution
 
 Features mock data demonstrating:
 - Integration with Google Analytics, Search Console, PageSpeed Insights

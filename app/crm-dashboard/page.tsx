@@ -82,9 +82,9 @@ export default function CRMDashboard() {
                 <img 
                   src="/images/eternaguard-logo-wide.png" 
                   alt="EternaGuard - Secure. Maintain. Innovate." 
-                  className="h-8 w-auto"
+                  className="h-12 w-auto"
                 />
-                <span className="text-lg font-bold text-slate-600">| CRM</span>
+                <span className="text-xl font-bold text-slate-600">| CRM</span>
               </Link>
             </div>
             <Link
@@ -141,7 +141,12 @@ export default function CRMDashboard() {
           <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-slate-900">Recent Contracts</h2>
-              <button className="text-blue-600 hover:text-blue-700 font-semibold text-sm">View All →</button>
+              <div className="flex items-center space-x-4">
+                <Link href="/crm-dashboard/new-contract" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors text-sm font-semibold">
+                  + New Contract
+                </Link>
+                <button className="text-emerald-600 hover:text-emerald-700 font-semibold text-sm">View All →</button>
+              </div>
             </div>
             <div className="space-y-4">
               {recentContracts.map((contract, index) => (
