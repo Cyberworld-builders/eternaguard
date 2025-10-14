@@ -76,29 +76,17 @@ export default function Home() {
             </p>
           </div>
 
-          {/* Hero Image/Mockup */}
+          {/* Hero Visual */}
           <div className="relative max-w-5xl mx-auto mb-8">
             <div className="bg-gradient-to-br from-slate-100 to-slate-50 rounded-3xl p-8 shadow-2xl border border-slate-200">
-              {/* Image placeholder - user will add actual images here */}
-              <div className="relative aspect-video bg-white rounded-xl overflow-hidden shadow-lg">
-                <img 
-                  src="/images/eternaguard-hero.png" 
-                  alt="EternaGuard Cemetery Management System"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    // Fallback if image not found
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement!.innerHTML = `
-                      <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-50 to-blue-50">
-                        <div class="text-center p-8">
-                          <div class="text-6xl mb-4">🏛️</div>
-                          <h3 class="text-2xl font-bold text-slate-800 mb-2">3D Cemetery Visualization</h3>
-                          <p class="text-slate-600">Interactive GPS navigation with AI-powered landmark recognition</p>
-                        </div>
-                      </div>
-                    `;
-                  }}
-                />
+              <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
+                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-emerald-50 to-blue-50">
+                  <div className="text-center p-8">
+                    <div className="text-6xl mb-4">🏛️</div>
+                    <h3 className="text-2xl font-bold text-slate-800 mb-2">3D Cemetery Visualization</h3>
+                    <p className="text-slate-600">Interactive GPS navigation with AI-powered landmark recognition</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -140,52 +128,41 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Overview Section with Second Mockup */}
+      {/* Overview Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="relative max-w-6xl mx-auto">
             <div className="bg-gradient-to-br from-slate-50 to-blue-50 rounded-3xl p-8 shadow-2xl border border-slate-200">
-              <div className="relative aspect-video bg-white rounded-xl overflow-hidden shadow-lg">
-                <img 
-                  src="/images/eternaguard-overview.png" 
-                  alt="EternaGuard System Overview"
-                  className="w-full h-full object-cover"
-                  onError={(e) => {
-                    // Fallback if image not found
-                    e.currentTarget.style.display = 'none';
-                    e.currentTarget.parentElement!.innerHTML = `
-                      <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-slate-50 p-8">
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
-                          <div class="text-left">
-                            <h3 class="text-xl font-bold text-slate-900 mb-4">Core Features</h3>
-                            <ul class="space-y-2 text-slate-700">
-                              <li>✓ GPS Navigation</li>
-                              <li>✓ Condition Assessment</li>
-                              <li>✓ Image Analysis</li>
-                              <li>✓ Autonomous Drone Data</li>
-                            </ul>
-                          </div>
-                          <div class="flex items-center justify-center">
-                            <div class="text-center">
-                              <div class="text-6xl mb-2">📱</div>
-                              <div class="text-4xl">🏛️</div>
-                              <div class="text-6xl mt-2">🚁</div>
-                            </div>
-                          </div>
-                          <div class="text-right">
-                            <h3 class="text-xl font-bold text-slate-900 mb-4">Future Applications</h3>
-                            <ul class="space-y-2 text-slate-700">
-                              <li>Real Estate Management ✓</li>
-                              <li>Farming & Land Management ✓</li>
-                              <li>Autonomous Data Collection ✓</li>
-                              <li>Aerial Mapping ✓</li>
-                            </ul>
-                          </div>
-                        </div>
+              <div className="relative aspect-video rounded-xl overflow-hidden shadow-lg">
+                <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-slate-50 p-8">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+                    <div className="text-left">
+                      <h3 className="text-xl font-bold text-slate-900 mb-4">Core Features</h3>
+                      <ul className="space-y-2 text-slate-700">
+                        <li>✓ GPS Navigation</li>
+                        <li>✓ Condition Assessment</li>
+                        <li>✓ Image Analysis</li>
+                        <li>✓ Autonomous Drone Data</li>
+                      </ul>
+                    </div>
+                    <div className="flex items-center justify-center">
+                      <div className="text-center">
+                        <div className="text-6xl mb-2">📱</div>
+                        <div className="text-4xl">🏛️</div>
+                        <div className="text-6xl mt-2">🚁</div>
                       </div>
-                    `;
-                  }}
-                />
+                    </div>
+                    <div className="text-right">
+                      <h3 className="text-xl font-bold text-slate-900 mb-4">Future Applications</h3>
+                      <ul className="space-y-2 text-slate-700">
+                        <li>Real Estate Management ✓</li>
+                        <li>Farming & Land Management ✓</li>
+                        <li>Autonomous Data Collection ✓</li>
+                        <li>Aerial Mapping ✓</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
