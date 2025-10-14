@@ -109,8 +109,8 @@ export default function Home() {
               className="bg-blue-600 text-white px-8 py-4 rounded-full hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/30 text-lg font-semibold hover:scale-105"
             >
               Get Early Access
-            </a>
-            <a
+          </a>
+          <a
               href="#features"
               className="bg-white text-blue-600 px-8 py-4 rounded-full hover:bg-slate-50 transition-all shadow-xl border-2 border-blue-600 text-lg font-semibold"
             >
@@ -566,7 +566,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold text-slate-900 mb-4">Ready to Transform Your Property Management?</h2>
           <p className="text-xl text-slate-600 mb-8">
-            Let's discuss how MMFH can revolutionize your operations
+            Let&apos;s discuss how EternaGuard can revolutionize your operations
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
@@ -577,8 +577,8 @@ export default function Home() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
               </svg>
               Schedule a Demo
-            </a>
-            <a
+        </a>
+        <a
               href="#waitlist"
               className="bg-white text-blue-600 px-8 py-4 rounded-full hover:bg-slate-50 transition-all shadow-lg border-2 border-blue-600 text-lg font-semibold"
             >
