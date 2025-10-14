@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EternaGuard - Design Mockups</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f7;
+            padding: 2rem;
+        }
+
+        .mockup-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            gap: 3rem;
+        }
+
+        .mockup-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .mockup-title {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #1a1a2e;
+        }
+
+        canvas {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .controls {
+            margin-top: 1rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .btn:hover {
+            background: #2563eb;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            background: linear-gradient(135deg, #3b82f6, #10b981);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            color: #64748b;
+            font-size: 1.2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="mockup-container">
+        <div class="header">
+            <h1>EternaGuard Design Mockups</h1>
+            <p>Professional mockups for the AI-powered property management platform</p>
+        </div>
+
+        <div class="mockup-section">
+            <h2 class="mockup-title">Hero Section Mockup</h2>
+            <canvas id="heroCanvas"></canvas>
+        </div>
+
+        <div class="mockup-section">
+            <h2 class="mockup-title">Feature Cards Mockup</h2>
+            <canvas id="featuresCanvas"></canvas>
+        </div>
+
+        <div class="mockup-section">
+            <h2 class="mockup-title">Mobile App Interface Mockup</h2>
+            <canvas id="mobileCanvas"></canvas>
+        </div>
+
+        <div class="mockup-section">
+            <h2 class="mockup-title">Drone Monitoring Dashboard</h2>
+            <canvas id="droneCanvas"></canvas>
+        </div>
+
+        <div class="mockup-section">
+            <h2 class="mockup-title">AR Interface Concept</h2>
+            <canvas id="arCanvas"></canvas>
+        </div>
+
+        <div class="controls">
+            <button class="btn" onclick="downloadAll()">Download All Mockups</button>
+            <button class="btn" onclick="location.reload()">Regenerate</button>
+        </div>
+    </div>
+
+    <script>
+        // Helper functions
+        function drawRoundedRect(ctx, x, y, width, height, radius) {
+            ctx.beginPath();
+            ctx.moveTo(x + radius, y);
+            ctx.lineTo(x + width - radius, y);
+            ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
+            ctx.lineTo(x + width, y + height - radius);
+            ctx.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+            ctx.lineTo(x + radius, y + height);
+            ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
+            ctx.lineTo(x, y + radius);
+            ctx.quadraticCurveTo(x, y, x + radius, y);
+            ctx.closePath();
+        }
+
+        function createGradient(ctx, x1, y1, x2, y2, color1, color2) {
+            const gradient = ctx.createLinearGradient(x1, y1, x2, y2);
+            gradient.addColorStop(0, color1);
+            gradient.addColorStop(1, color2);
+            return gradient;
+        }
+
+        // Hero Section Mockup
+        const heroCanvas = document.getElementById('heroCanvas');
+        const heroCtx = heroCanvas.getContext('2d');
+        heroCanvas.width = 1400;
+        heroCanvas.height = 800;
+
+        // Background
+        const heroBg = createGradient(heroCtx, 0, 0, 1400, 800, '#0a0a0f', '#1a1a2e');
+        heroCtx.fillStyle = heroBg;
+        heroCtx.fillRect(0, 0, 1400, 800);
+
+        // Animated circles
+        heroCtx.fillStyle = 'rgba(59, 130, 246, 0.1)';
+        heroCtx.beginPath();
+        heroCtx.arc(300, 200, 200, 0, Math.PI * 2);
+        heroCtx.fill();
+
+        heroCtx.fillStyle = 'rgba(16, 185, 129, 0.08)';
+        heroCtx.beginPath();
+        heroCtx.arc(1100, 600, 250, 0, Math.PI * 2);
+        heroCtx.fill();
+
+        // Title
+        heroCtx.font = 'bold 80px -apple-system, sans-serif';
+        const titleGradient = createGradient(heroCtx, 0, 280, 0, 360, '#3b82f6', '#10b981');
+        heroCtx.fillStyle = titleGradient;
+        heroCtx.textAlign = 'center';
+        heroCtx.fillText('EternaGuard', 700, 320);
+
+        // Tagline
+        heroCtx.font = '32px -apple-system, sans-serif';
+        heroCtx.fillStyle = '#94a3b8';
+        heroCtx.fillText('AI-Powered Property Intelligence', 700, 380);
+
+        // CTA Buttons
+        drawRoundedRect(heroCtx, 520, 440, 160, 60, 30);
+        heroCtx.fillStyle = createGradient(heroCtx, 520, 440, 680, 500, '#3b82f6', '#10b981');
+        heroCtx.fill();
+        heroCtx.fillStyle = 'white';
+        heroCtx.font = 'bold 20px -apple-system, sans-serif';
+        heroCtx.textAlign = 'center';
+        heroCtx.fillText('Get Started', 600, 477);
+
+        drawRoundedRect(heroCtx, 720, 440, 160, 60, 30);
+        heroCtx.strokeStyle = 'rgba(255, 255, 255, 0.3)';
+        heroCtx.lineWidth = 2;
+        heroCtx.stroke();
+        heroCtx.fillStyle = 'white';
+        heroCtx.fillText('Learn More', 800, 477);
+
+        // Feature Cards Mockup
+        const featuresCanvas = document.getElementById('featuresCanvas');
+        const featuresCtx = featuresCanvas.getContext('2d');
+        featuresCanvas.width = 1400;
+        featuresCanvas.height = 600;
+
+        // Background
+        featuresCtx.fillStyle = '#0a0a0f';
+        featuresCtx.fillRect(0, 0, 1400, 600);
+
+        // Draw 3 feature cards
+        const cardWidth = 380;
+        const cardHeight = 450;
+        const cardSpacing = 80;
+        const startX = (1400 - (cardWidth * 3 + cardSpacing * 2)) / 2;
+
+        for (let i = 0; i < 3; i++) {
+            const x = startX + i * (cardWidth + cardSpacing);
+            const y = 75;
+
+            // Card background
+            drawRoundedRect(featuresCtx, x, y, cardWidth, cardHeight, 20);
+            featuresCtx.fillStyle = 'rgba(255, 255, 255, 0.03)';
+            featuresCtx.fill();
+            featuresCtx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+            featuresCtx.lineWidth = 1;
+            featuresCtx.stroke();
+
+            // Top accent line
+            featuresCtx.fillStyle = createGradient(featuresCtx, x, y, x + cardWidth, y, '#3b82f6', '#10b981');
+            featuresCtx.fillRect(x, y, cardWidth, 3);
+
+            // Icon
+            drawRoundedRect(featuresCtx, x + 40, y + 40, 70, 70, 15);
+            featuresCtx.fillStyle = createGradient(featuresCtx, x + 40, y + 40, x + 110, y + 110, '#3b82f6', '#10b981');
+            featuresCtx.fill();
+
+            // Icon symbol
+            featuresCtx.fillStyle = 'white';
+            featuresCtx.font = 'bold 36px Arial';
+            featuresCtx.textAlign = 'center';
+            const icons = ['📍', '🚁', '🤖'];
+            featuresCtx.fillText(icons[i], x + 75, y + 85);
+
+            // Title
+            featuresCtx.fillStyle = 'white';
+            featuresCtx.font = 'bold 26px -apple-system, sans-serif';
+            featuresCtx.textAlign = 'left';
+            const titles = ['Precision Navigation', 'Autonomous Drones', 'AI Analysis'];
+            featuresCtx.fillText(titles[i], x + 40, y + 160);
+
+            // Description lines
+            featuresCtx.fillStyle = '#94a3b8';
+            featuresCtx.font = '16px -apple-system, sans-serif';
+            const descriptions = [
+                ['GPS-guided location tracking', 'combined with real-time image', 'recognition to pinpoint exact', 'positions on your property.'],
+                ['Scheduled drone patrols capture', 'comprehensive property data,', 'automatically detecting issues', 'and maintenance needs.'],
+                ['AI-powered analysis converts', 'raw image data into actionable', 'insights and automated work', 'orders based on conditions.']
+            ];
+            
+            descriptions[i].forEach((line, index) => {
+                featuresCtx.fillText(line, x + 40, y + 210 + index * 28);
+            });
+        }
+
+        // Mobile App Interface Mockup
+        const mobileCanvas = document.getElementById('mobileCanvas');
+        const mobileCtx = mobileCanvas.getContext('2d');
+        mobileCanvas.width = 1400;
+        mobileCanvas.height = 800;
+
+        // Background
+        mobileCtx.fillStyle = '#1a1a2e';
+        mobileCtx.fillRect(0, 0, 1400, 800);
+
+        // Phone mockup
+        const phoneX = 500;
+        const phoneY = 100;
+        const phoneWidth = 400;
+        const phoneHeight = 600;
+
+        // Phone body
+        drawRoundedRect(mobileCtx, phoneX, phoneY, phoneWidth, phoneHeight, 40);
+        mobileCtx.fillStyle = '#2d2d44';
+        mobileCtx.fill();
+        mobileCtx.strokeStyle = '#444';
+        mobileCtx.lineWidth = 3;
+        mobileCtx.stroke();
+
+        // Screen
+        drawRoundedRect(mobileCtx, phoneX + 15, phoneY + 15, phoneWidth - 30, phoneHeight - 30, 30);
+        mobileCtx.fillStyle = '#0a0a0f';
+        mobileCtx.fill();
+
+        // Status bar
+        mobileCtx.fillStyle = '#1a1a2e';
+        mobileCtx.fillRect(phoneX + 15, phoneY + 15, phoneWidth - 30, 50);
+        mobileCtx.fillStyle = 'white';
+        mobileCtx.font = '14px -apple-system, sans-serif';
+        mobileCtx.fillText('9:41', phoneX + 35, phoneY + 43);
+        mobileCtx.fillText('⚡ 🔋', phoneX + phoneWidth - 80, phoneY + 43);
+
+        // Map view
+        mobileCtx.fillStyle = '#16213e';
+        mobileCtx.fillRect(phoneX + 15, phoneY + 65, phoneWidth - 30, 350);
+
+        // Map markers
+        for (let i = 0; i < 5; i++) {
+            const markerX = phoneX + 50 + Math.random() * (phoneWidth - 100);
+            const markerY = phoneY + 100 + Math.random() * 280;
+            
+            mobileCtx.beginPath();
+            mobileCtx.arc(markerX, markerY, 8, 0, Math.PI * 2);
+            mobileCtx.fillStyle = '#3b82f6';
+            mobileCtx.fill();
+            
+            mobileCtx.beginPath();
+            mobileCtx.arc(markerX, markerY, 20, 0, Math.PI * 2);
+            mobileCtx.strokeStyle = 'rgba(59, 130, 246, 0.3)';
+            mobileCtx.lineWidth = 2;
+            mobileCtx.stroke();
+        }
+
+        // Bottom card
+        drawRoundedRect(mobileCtx, phoneX + 35, phoneY + 440, phoneWidth - 70, 200, 20);
+        mobileCtx.fillStyle = '#1e293b';
+        mobileCtx.fill();
+
+        mobileCtx.fillStyle = 'white';
+        mobileCtx.font = 'bold 22px -apple-system, sans-serif';
+        mobileCtx.fillText('Marker #A-247', phoneX + 55, phoneY + 480);
+
+        mobileCtx.fillStyle = '#94a3b8';
+        mobileCtx.font = '16px -apple-system, sans-serif';
+        mobileCtx.fillText('Section A, Row 12, Plot 7', phoneX + 55, phoneY + 510);
+
+        // Action button
+        drawRoundedRect(mobileCtx, phoneX + 55, phoneY + 550, phoneWidth - 110, 50, 12);
+        mobileCtx.fillStyle = createGradient(mobileCtx, phoneX + 55, phoneY + 550, phoneX + phoneWidth - 55, phoneY + 600, '#3b82f6', '#10b981');
+        mobileCtx.fill();
+
+        mobileCtx.fillStyle = 'white';
+        mobileCtx.font = 'bold 18px -apple-system, sans-serif';
+        mobileCtx.textAlign = 'center';
+        mobileCtx.fillText('Navigate Here', phoneX + phoneWidth / 2, phoneY + 582);
+
+        // Drone Monitoring Dashboard
+        const droneCanvas = document.getElementById('droneCanvas');
+        const droneCtx = droneCanvas.getContext('2d');
+        droneCanvas.width = 1400;
+        droneCanvas.height = 800;
+
+        // Background
+        droneCtx.fillStyle = '#0a0a0f';
+        droneCtx.fillRect(0, 0, 1400, 800);
+
+        // Header
+        droneCtx.fillStyle = '#1a1a2e';
+        droneCtx.fillRect(0, 0, 1400, 80);
+        droneCtx.fillStyle = 'white';
+        droneCtx.font = 'bold 28px -apple-system, sans-serif';
+        droneCtx.textAlign = 'left';
+        droneCtx.fillText('Drone Monitoring Dashboard', 60, 50);
+
+        // Live feed
+        drawRoundedRect(droneCtx, 60, 120, 600, 400, 15);
+        droneCtx.fillStyle = '#16213e';
+        droneCtx.fill();
+        droneCtx.strokeStyle = '#3b82f6';
+        droneCtx.lineWidth = 2;
+        droneCtx.stroke();
+
+        droneCtx.fillStyle = '#3b82f6';
+        droneCtx.font = 'bold 16px -apple-system, sans-serif';
+        droneCtx.fillText('LIVE FEED', 80, 150);
+
+        // Grid pattern
+        droneCtx.strokeStyle = 'rgba(59, 130, 246, 0.2)';
+        droneCtx.lineWidth = 1;
+        for (let i = 0; i < 8; i++) {
+            droneCtx.beginPath();
+            droneCtx.moveTo(60, 120 + i * 50);
+            droneCtx.lineTo(660, 120 + i * 50);
+            droneCtx.stroke();
+        }
+        for (let i = 0; i < 12; i++) {
+            droneCtx.beginPath();
+            droneCtx.moveTo(60 + i * 50, 120);
+            droneCtx.lineTo(60 + i * 50, 520);
+            droneCtx.stroke();
+        }
+
+        // Detection boxes
+        droneCtx.strokeStyle = '#10b981';
+        droneCtx.lineWidth = 3;
+        droneCtx.setLineDash([5, 5]);
+        droneCtx.strokeRect(200, 250, 120, 80);
+        droneCtx.strokeRect(400, 300, 100, 100);
+        droneCtx.setLineDash([]);
+
+        // Stats panel
+        const statsX = 720;
+        const statsY = 120;
+        const statWidth = 280;
+        const statHeight = 120;
+
+        const stats = [
+            { label: 'Active Drones', value: '3', icon: '🚁' },
+            { label: 'Issues Detected', value: '12', icon: '⚠️' },
+            { label: 'Coverage', value: '94%', icon: '📊' }
+        ];
+
+        stats.forEach((stat, index) => {
+            const y = statsY + index * 150;
+            drawRoundedRect(droneCtx, statsX, y, statWidth, statHeight, 15);
+            droneCtx.fillStyle = 'rgba(59, 130, 246, 0.1)';
+            droneCtx.fill();
+            droneCtx.strokeStyle = 'rgba(59, 130, 246, 0.3)';
+            droneCtx.lineWidth = 1;
+            droneCtx.stroke();
+
+            droneCtx.fillStyle = 'white';
+            droneCtx.font = '32px Arial';
+            droneCtx.fillText(stat.icon, statsX + 30, y + 55);
+
+            droneCtx.font = '16px -apple-system, sans-serif';
+            droneCtx.fillStyle = '#94a3b8';
+            droneCtx.fillText(stat.label, statsX + 90, y + 40);
+
+            droneCtx.font = 'bold 32px -apple-system, sans-serif';
+            droneCtx.fillStyle = 'white';
+            droneCtx.fillText(stat.value, statsX + 90, y + 80);
+        });
+
+        // Task list
+        drawRoundedRect(droneCtx, 60, 560, 940, 180, 15);
+        droneCtx.fillStyle = '#1a1a2e';
+        droneCtx.fill();
+
+        droneCtx.fillStyle = 'white';
+        droneCtx.font = 'bold 20px -apple-system, sans-serif';
+        droneCtx.fillText('Recent Detections', 90, 600);
+
+        const tasks = ['Fallen branch - Section C', 'Marker tilt - Plot A-247', 'Overgrown vegetation - Area B'];
+        tasks.forEach((task, index) => {
+            droneCtx.fillStyle = '#94a3b8';
+            droneCtx.font = '16px -apple-system, sans-serif';
+            droneCtx.fillText('• ' + task, 90, 640 + index * 35);
+        });
+
+        // AR Interface Concept
+        const arCanvas = document.getElementById('arCanvas');
+        const arCtx = arCanvas.getContext('2d');
+        arCanvas.width = 1400;
+        arCanvas.height = 800;
+
+        // Background (simulated AR view)
+        const arBg = arCtx.createRadialGradient(700, 400, 0, 700, 400, 800);
+        arBg.addColorStop(0, '#1a1a2e');
+        arBg.addColorStop(1, '#0a0a0f');
+        arCtx.fillStyle = arBg;
+        arCtx.fillRect(0, 0, 1400, 800);
+
+        // Grid overlay
+        arCtx.strokeStyle = 'rgba(59, 130, 246, 0.15)';
+        arCtx.lineWidth = 1;
+        for (let i = 0; i < 20; i++) {
+            arCtx.beginPath();
+            arCtx.moveTo(i * 70, 0);
+            arCtx.lineTo(i * 70, 800);
+            arCtx.stroke();
+        }
+        for (let i = 0; i < 12; i++) {
+            arCtx.beginPath();
+            arCtx.moveTo(0, i * 70);
+            arCtx.lineTo(1400, i * 70);
+            arCtx.stroke();
+        }
+
+        // AR markers
+        const markers = [
+            { x: 300, y: 250, label: 'Task #1', type: 'warning' },
+            { x: 700, y: 400, label: 'Marker A-247', type: 'info' },
+            { x: 1000, y: 350, label: 'Maintenance', type: 'warning' }
+        ];
+
+        markers.forEach(marker => {
+            // Pulsing circle
+            arCtx.beginPath();
+            arCtx.arc(marker.x, marker.y, 30, 0, Math.PI * 2);
+            arCtx.fillStyle = marker.type === 'warning' ? 'rgba(234, 179, 8, 0.2)' : 'rgba(59, 130, 246, 0.2)';
+            arCtx.fill();
+
+            arCtx.beginPath();
+            arCtx.arc(marker.x, marker.y, 15, 0, Math.PI * 2);
+            arCtx.fillStyle = marker.type === 'warning' ? '#eab308' : '#3b82f6';
+            arCtx.fill();
+
+            // Info box
+            const boxWidth = 180;
+            const boxHeight = 70;
+            const boxX = marker.x - boxWidth / 2;
+            const boxY = marker.y - 90;
+
+            drawRoundedRect(arCtx, boxX, boxY, boxWidth, boxHeight, 10);
+            arCtx.fillStyle = 'rgba(26, 26, 46, 0.9)';
+            arCtx.fill();
+            arCtx.strokeStyle = marker.type === 'warning' ? '#eab308' : '#3b82f6';
+            arCtx.lineWidth = 2;
+            arCtx.stroke();
+
+            arCtx.fillStyle = 'white';
+            arCtx.font = 'bold 16px -apple-system, sans-serif';
+            arCtx.textAlign = 'center';
+            arCtx.fillText(marker.label, marker.x, boxY + 30);
+
+            arCtx.fillStyle = '#94a3b8';
+            arCtx.font = '12px -apple-system, sans-serif';
+            arCtx.fillText('Tap to view details', marker.x, boxY + 50);
+
+            // Connecting line
+            arCtx.beginPath();
+            arCtx.moveTo(marker.x, marker.y - 15);
+            arCtx.lineTo(marker.x, boxY + boxHeight);
+            arCtx.strokeStyle = marker.type === 'warning' ? 'rgba(234, 179, 8, 0.5)' : 'rgba(59, 130, 246, 0.5)';
+            arCtx.lineWidth = 2;
+            arCtx.stroke();
+        });
+
+        // HUD elements
+        arCtx.fillStyle = 'rgba(26, 26, 46, 0.8)';
+        arCtx.fillRect(20, 20, 250, 80);
+        arCtx.strokeStyle = '#3b82f6';
+        arCtx.lineWidth = 2;
+        arCtx.strokeRect(20, 20, 250, 80);
+
+        arCtx.fillStyle = 'white';
+        arCtx.font = 'bold 18px -apple-system, sans-serif';
+        arCtx.textAlign = 'left';
+        arCtx.fillText('AR Mode Active', 40, 50);
+        arCtx.fillStyle = '#94a3b8';
+        arCtx.font = '14px -apple-system, sans-serif';
+        arCtx.fillText('3 items in view', 40, 75);
+
+        function downloadAll() {
+            const canvases = [
+                { canvas: heroCanvas, name: 'hero-section' },
+                { canvas: featuresCanvas, name: 'feature-cards' },
+                { canvas: mobileCanvas, name: 'mobile-app' },
+                { canvas: droneCanvas, name: 'drone-dashboard' },
+                { canvas: arCanvas, name: 'ar-interface' }
+            ];
+
+            canvases.forEach(({ canvas, name }) => {
+                const link = document.createElement('a');
+                link.download = `eternaguard-${name}.png`;
+                link.href = canvas.toDataURL();
+                link.click();
+            });
+        }
+    </script>
+</body>
+</html>
+

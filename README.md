@@ -1,36 +1,164 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EternaGuard Landing Page
 
-## Getting Started
+Next.js landing page for EternaGuard - an AI-powered property management system tailored for death care businesses.
 
-First, run the development server:
+## 🚀 Getting Started
+
+### Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Build for Production
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run build
+npm start
+```
 
-## Learn More
+## 📁 Project Structure
 
-To learn more about Next.js, take a look at the following resources:
+```
+mmfh-landing-app/
+├── app/
+│   ├── page.tsx          # Main landing page
+│   ├── layout.tsx        # Root layout with metadata
+│   ├── globals.css       # Global styles
+│   ├── mockups/
+│   │   └── page.tsx      # Mockup generator page
+│   └── cms-dashboard/
+│       └── page.tsx      # CMS Dashboard demo
+├── public/
+│   └── images/          # Place your mockup images here
+├── IMAGE-SETUP.md       # Instructions for adding images
+├── MOCKUP-INSTRUCTIONS.md  # Mockup generator docs
+└── README.md           # This file
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## 🎨 Features
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- ✅ **Modern Design**: Gradient backgrounds, smooth animations, glassmorphism effects
+- ✅ **Fully Responsive**: Mobile-first design that looks great on all devices
+- ✅ **SEO Optimized**: Proper metadata and semantic HTML
+- ✅ **Accessible**: WCAG compliant with keyboard navigation
+- ✅ **Fast**: Built with Next.js 15 and Turbopack for optimal performance
+- ✅ **TypeScript**: Fully typed for better development experience
+- ✅ **Built-in Mockup Generator**: Live mockup generator at `/mockups` route
+- ✅ **CMS Dashboard Demo**: Interactive analytics dashboard at `/cms-dashboard` route
 
-## Deploy on Vercel
+## 📸 Mockups & Images
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Built-in Mockup Generator
+Visit **http://localhost:3000/mockups** to access the live mockup generator:
+- Generates 5 professional mockups automatically
+- One-click download for all images
+- Hero section, feature cards, mobile app, drone dashboard, and AR interface
+- Fully integrated into the Next.js app with navigation
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+See [MOCKUP-INSTRUCTIONS.md](./MOCKUP-INSTRUCTIONS.md) for detailed docs.
+
+## 📊 CMS Dashboard Demo
+
+### Interactive Marketing Dashboard
+Visit **http://localhost:3000/cms-dashboard** to see the Phase 1 marketing features:
+- **Analytics Overview**: Google Analytics-style metrics with trends
+- **Social Media Campaigns**: Facebook, LinkedIn, Instagram, Twitter/X performance
+- **SEO Metrics**: Organic traffic, keywords, backlinks, domain authority
+- **Content Management**: Blog post tracking with status indicators
+- **Top Pages**: Performance metrics for key landing pages
+- **Lead Generation**: Conversion tracking and cost per lead
+
+Features mock data demonstrating:
+- Integration with Google Analytics, Search Console, PageSpeed Insights
+- Social media campaign management across major platforms
+- Unified dashboard consolidating all marketing metrics
+- Real-time performance indicators and trend analysis
+
+### Adding Static Images
+See [IMAGE-SETUP.md](./IMAGE-SETUP.md) for instructions on adding custom images:
+1. Save your images as `eternaguard-hero.png` and `eternaguard-overview.png`
+2. Place them in `public/images/`
+3. The page will automatically display them
+
+## 🎨 Customization
+
+### Colors
+
+The site uses a blue-to-emerald gradient color scheme. Main colors:
+- Primary: `blue-600` (#2563eb)
+- Secondary: `emerald-600` (#059669)
+- Accent gradients throughout
+
+To change colors, search and replace in `app/page.tsx`:
+- `blue-600` → your primary color
+- `emerald-600` → your secondary color
+
+### Content
+
+All content is in `app/page.tsx`. Each section is clearly commented:
+- Hero Section
+- Stats Section
+- Overview Section
+- Features Section
+- Use Cases Section
+- Future Vision Section
+- Integration Section
+- Waitlist Section (with email capture)
+- Contact Section
+- Footer
+
+### Metadata
+
+Update site metadata in `app/layout.tsx`:
+- Title
+- Description
+- Other SEO tags
+
+## 🔧 Tech Stack
+
+- **Framework**: Next.js 15
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Fonts**: Geist Sans & Geist Mono
+- **Build**: Turbopack (development)
+- **Node**: Tested with latest Node.js LTS
+
+## 📧 Lead Capture
+
+The waitlist form currently logs emails to console. To connect it to a real backend:
+
+1. Add your email service (e.g., Mailchimp, SendGrid, ConvertKit)
+2. Update the `handleSubmit` function in `app/page.tsx`
+3. Add API route in `app/api/subscribe/route.ts`
+
+Example services:
+- [Mailchimp](https://mailchimp.com/)
+- [ConvertKit](https://convertkit.com/)
+- [EmailOctopus](https://emailoctopus.com/)
+- [Resend](https://resend.com/)
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. Push to GitHub
+2. Import project in [Vercel](https://vercel.com)
+3. Deploy automatically
+
+### Other Platforms
+
+- **Netlify**: `npm run build` → Deploy `out/` folder
+- **AWS Amplify**: Connect GitHub repository
+- **DigitalOcean**: Use App Platform
+- **Self-hosted**: Use `npm run build && npm start`
+
+## 📝 License
+
+Proprietary - © 2025 EternaGuard
+
+## 🤝 Support
+
+For questions or support, contact: contact@eternaguard.com
