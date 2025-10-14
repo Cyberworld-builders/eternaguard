@@ -82,9 +82,9 @@ export default function CRMDashboard() {
                 <img 
                   src="/images/eternaguard-logo-wide.png" 
                   alt="EternaGuard - Secure. Maintain. Innovate." 
-                  className="h-8 w-auto"
+                  className="h-12 w-auto"
                 />
-                <span className="text-lg font-bold text-slate-600">| CRM</span>
+                <span className="text-xl font-bold text-slate-600">| CRM</span>
               </Link>
             </div>
             <Link

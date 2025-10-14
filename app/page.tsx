@@ -24,7 +24,7 @@ export default function Home() {
               <img 
                 src="/images/eternaguard-logo-wide.png" 
                 alt="EternaGuard - Secure. Maintain. Innovate." 
-                className="h-10 w-auto"
+                className="h-14 w-auto"
               />
             </div>
             <div className="hidden md:flex space-x-8">

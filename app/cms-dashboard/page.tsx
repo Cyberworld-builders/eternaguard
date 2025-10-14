@@ -125,9 +125,9 @@ export default function CMSDashboard() {
                 <img 
                   src="/images/eternaguard-logo-wide.png" 
                   alt="EternaGuard - Secure. Maintain. Innovate." 
-                  className="h-8 w-auto"
+                  className="h-12 w-auto"
                 />
-                <span className="text-lg font-bold text-slate-600">| CMS</span>
+                <span className="text-xl font-bold text-slate-600">| CMS</span>
               </Link>
             </div>
             <div className="flex items-center space-x-4">

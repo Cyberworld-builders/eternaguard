@@ -456,9 +456,9 @@ export default function MockupsPage() {
               <img 
                 src="/images/eternaguard-logo-wide.png" 
                 alt="EternaGuard - Secure. Maintain. Innovate." 
-                className="h-8 w-auto"
+                className="h-12 w-auto"
               />
-              <span className="text-lg font-bold text-slate-600">| Mockups</span>
+              <span className="text-xl font-bold text-slate-600">| Mockups</span>
             </Link>
             <Link
               href="/"
