@@ -377,7 +377,7 @@ export default function Home() {
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-slate-900 mb-4">The Future of Property Management</h2>
             <p className="text-xl text-slate-600 max-w-2xl mx-auto">
-              We're building the foundation for autonomous property maintenance and augmented reality experiences
+              We&apos;re building the foundation for autonomous property maintenance and augmented reality experiences
             </p>
           </div>
 
@@ -502,7 +502,7 @@ export default function Home() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <p className="text-xl font-semibold">Thank you for joining our waitlist!</p>
-                <p className="mt-2 text-emerald-50">We'll be in touch soon.</p>
+                <p className="mt-2 text-emerald-50">We&apos;ll be in touch soon.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="max-w-md mx-auto">
