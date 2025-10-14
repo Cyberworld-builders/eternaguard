@@ -5,6 +5,7 @@ import Link from "next/link";
 
 export default function CRMDashboard() {
   const [activeTab, setActiveTab] = useState("overview");
+  const [showWorkOrderModal, setShowWorkOrderModal] = useState(false);
 
   // Mock Data
   const stats = {
@@ -206,8 +207,11 @@ export default function CRMDashboard() {
         <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6 mb-8">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-slate-900">Work Orders</h2>
-            <button className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors text-sm">
-              Create Work Order
+            <button 
+              onClick={() => setShowWorkOrderModal(true)}
+              className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors text-sm font-semibold"
+            >
+              + Create Work Order
             </button>
           </div>
           <div className="overflow-x-auto">
@@ -303,6 +307,425 @@ export default function CRMDashboard() {
               <div className="text-4xl mb-2">⚡</div>
               <div className="text-sm">Automated Workflows</div>
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Work Order Creation Modal */}
+      {showWorkOrderModal && (
+        <WorkOrderModal onClose={() => setShowWorkOrderModal(false)} />
+      )}
+    </div>
+  );
+}
+
+// Work Order Modal Component
+function WorkOrderModal({ onClose }: { onClose: () => void }) {
+  const [step, setStep] = useState(1);
+  const [formData, setFormData] = useState({
+    type: "Maintenance",
+    title: "",
+    description: "",
+    location: "",
+    section: "",
+    assignee: "",
+    priority: "Medium",
+    dueDate: "",
+    estimatedHours: "",
+    equipment: [] as string[],
+    materials: "",
+    notes: "",
+  });
+
+  const workOrderTypes = ["Maintenance", "Repair", "Inspection", "Landscaping", "Emergency", "Installation"];
+  const staff = ["Mike Rodriguez", "David Chen", "Sarah Johnson", "John Smith", "Maria Garcia"];
+  const equipmentList = ["Lawn Mower", "Trimmer", "Excavator", "Truck", "Power Tools", "Safety Equipment"];
+  const sections = ["Section A", "Section B", "Section C", "Section D", "North Entrance", "South Entrance", "Memorial Garden", "Administration"];
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const toggleEquipment = (item: string) => {
+    setFormData(prev => ({
+      ...prev,
+      equipment: prev.equipment.includes(item)
+        ? prev.equipment.filter(e => e !== item)
+        : [...prev.equipment, item]
+    }));
+  };
+
+  const validateStep = () => {
+    if (step === 1) {
+      return formData.title && formData.description;
+    } else if (step === 2) {
+      return formData.location && formData.assignee;
+    } else if (step === 3) {
+      return formData.dueDate && formData.estimatedHours;
+    }
+    return true;
+  };
+
+  const nextStep = () => {
+    if (validateStep()) {
+      setStep(prev => prev + 1);
+    }
+  };
+
+  const prevStep = () => {
+    setStep(prev => prev - 1);
+  };
+
+  const handleSubmit = () => {
+    alert('Work Order created successfully! (Demo only)');
+    console.log('Work Order Data:', formData);
+    onClose();
+  };
+
+  const progress = ((step - 1) / 2) * 100;
+
+  return (
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+        {/* Modal Header */}
+        <div className="sticky top-0 bg-white border-b border-slate-200 px-8 py-6 flex items-center justify-between rounded-t-2xl">
+          <div>
+            <h2 className="text-3xl font-bold text-slate-900">Create Work Order</h2>
+            <p className="text-slate-600 mt-1">Step {step} of 3</p>
+          </div>
+          <button
+            onClick={onClose}
+            className="text-slate-400 hover:text-slate-600 transition-colors p-2 hover:bg-slate-100 rounded-full"
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Progress Bar */}
+        <div className="px-8 pt-6">
+          <div className="w-full bg-slate-200 rounded-full h-2">
+            <div
+              className="bg-emerald-600 h-2 rounded-full transition-all duration-500 ease-out"
+              style={{ width: `${progress}%` }}
+            ></div>
+          </div>
+        </div>
+
+        {/* Modal Content */}
+        <div className="px-8 py-6 space-y-6">
+          {step === 1 && (
+            <>
+              <h3 className="text-2xl font-bold text-slate-800 mb-4">Work Order Details</h3>
+              
+              <div>
+                <label htmlFor="type" className="block text-sm font-semibold text-slate-700 mb-2">
+                  Type
+                </label>
+                <select
+                  id="type"
+                  name="type"
+                  value={formData.type}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                >
+                  {workOrderTypes.map(type => (
+                    <option key={type} value={type}>{type}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="title" className="block text-sm font-semibold text-slate-700 mb-2">
+                  Title *
+                </label>
+                <input
+                  type="text"
+                  id="title"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  placeholder="e.g., Marker Leveling - Section A"
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  required
+                />
+              </div>
+
+              <div>
+                <label htmlFor="description" className="block text-sm font-semibold text-slate-700 mb-2">
+                  Description *
+                </label>
+                <textarea
+                  id="description"
+                  name="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                  rows={4}
+                  placeholder="Describe the work to be done..."
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
+                  required
+                />
+              </div>
+            </>
+          )}
+
+          {step === 2 && (
+            <>
+              <h3 className="text-2xl font-bold text-slate-800 mb-4">Location & Assignment</h3>
+              
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="section" className="block text-sm font-semibold text-slate-700 mb-2">
+                    Cemetery Section
+                  </label>
+                  <select
+                    id="section"
+                    name="section"
+                    value={formData.section}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  >
+                    <option value="">Select section...</option>
+                    {sections.map(section => (
+                      <option key={section} value={section}>{section}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label htmlFor="location" className="block text-sm font-semibold text-slate-700 mb-2">
+                    Specific Location *
+                  </label>
+                  <input
+                    type="text"
+                    id="location"
+                    name="location"
+                    value={formData.location}
+                    onChange={handleChange}
+                    placeholder="e.g., Plot A-247, Near oak tree"
+                    className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="assignee" className="block text-sm font-semibold text-slate-700 mb-2">
+                  Assign To *
+                </label>
+                <select
+                  id="assignee"
+                  name="assignee"
+                  value={formData.assignee}
+                  onChange={handleChange}
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                  required
+                >
+                  <option value="">Select staff member...</option>
+                  {staff.map(person => (
+                    <option key={person} value={person}>{person}</option>
+                  ))}
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-3">
+                  Priority
+                </label>
+                <div className="flex space-x-4">
+                  {["Low", "Medium", "High", "Emergency"].map(priority => (
+                    <button
+                      key={priority}
+                      type="button"
+                      onClick={() => setFormData(prev => ({ ...prev, priority }))}
+                      className={`px-6 py-3 rounded-lg border transition-all ${
+                        formData.priority === priority
+                          ? priority === "Emergency"
+                            ? "bg-red-600 text-white border-red-600"
+                            : priority === "High"
+                            ? "bg-orange-500 text-white border-orange-500"
+                            : priority === "Medium"
+                            ? "bg-yellow-500 text-white border-yellow-500"
+                            : "bg-slate-500 text-white border-slate-500"
+                          : "bg-white text-slate-700 border-slate-300 hover:border-emerald-300"
+                      }`}
+                    >
+                      {priority}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+
+          {step === 3 && (
+            <>
+              <h3 className="text-2xl font-bold text-slate-800 mb-4">Schedule & Resources</h3>
+              
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="dueDate" className="block text-sm font-semibold text-slate-700 mb-2">
+                    Due Date *
+                  </label>
+                  <input
+                    type="date"
+                    id="dueDate"
+                    name="dueDate"
+                    value={formData.dueDate}
+                    onChange={handleChange}
+                    className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    required
+                  />
+                </div>
+
+                <div>
+                  <label htmlFor="estimatedHours" className="block text-sm font-semibold text-slate-700 mb-2">
+                    Estimated Hours *
+                  </label>
+                  <input
+                    type="number"
+                    id="estimatedHours"
+                    name="estimatedHours"
+                    value={formData.estimatedHours}
+                    onChange={handleChange}
+                    placeholder="4"
+                    min="0.5"
+                    step="0.5"
+                    className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-3">
+                  Required Equipment
+                </label>
+                <div className="grid grid-cols-2 gap-3">
+                  {equipmentList.map(item => (
+                    <div
+                      key={item}
+                      onClick={() => toggleEquipment(item)}
+                      className={`p-3 border-2 rounded-lg cursor-pointer transition-all ${
+                        formData.equipment.includes(item)
+                          ? "border-emerald-500 bg-emerald-50"
+                          : "border-slate-200 hover:border-emerald-300"
+                      }`}
+                    >
+                      <div className="flex items-center space-x-2">
+                        <input
+                          type="checkbox"
+                          checked={formData.equipment.includes(item)}
+                          onChange={() => {}}
+                          className="w-4 h-4 text-emerald-600 rounded"
+                        />
+                        <span className="text-slate-700">{item}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="materials" className="block text-sm font-semibold text-slate-700 mb-2">
+                  Materials Needed
+                </label>
+                <textarea
+                  id="materials"
+                  name="materials"
+                  value={formData.materials}
+                  onChange={handleChange}
+                  rows={3}
+                  placeholder="List any materials needed (optional)"
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
+                />
+              </div>
+
+              <div>
+                <label htmlFor="notes" className="block text-sm font-semibold text-slate-700 mb-2">
+                  Additional Notes
+                </label>
+                <textarea
+                  id="notes"
+                  name="notes"
+                  value={formData.notes}
+                  onChange={handleChange}
+                  rows={3}
+                  placeholder="Any additional information or special instructions (optional)"
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 resize-none"
+                />
+              </div>
+
+              {/* Summary */}
+              <div className="bg-slate-50 border border-slate-200 rounded-lg p-4">
+                <h4 className="font-semibold text-slate-900 mb-3">Work Order Summary</h4>
+                <div className="space-y-2 text-sm text-slate-600">
+                  <p><strong>Type:</strong> {formData.type}</p>
+                  <p><strong>Title:</strong> {formData.title}</p>
+                  <p><strong>Assigned to:</strong> {formData.assignee}</p>
+                  <p><strong>Priority:</strong> <span className={`font-semibold ${
+                    formData.priority === "Emergency" ? "text-red-600" :
+                    formData.priority === "High" ? "text-orange-600" :
+                    formData.priority === "Medium" ? "text-yellow-600" :
+                    "text-slate-600"
+                  }`}>{formData.priority}</span></p>
+                  <p><strong>Due:</strong> {formData.dueDate}</p>
+                  <p><strong>Est. Time:</strong> {formData.estimatedHours} hours</p>
+                  {formData.equipment.length > 0 && (
+                    <p><strong>Equipment:</strong> {formData.equipment.join(", ")}</p>
+                  )}
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* Modal Footer */}
+        <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 px-8 py-6 flex items-center justify-between rounded-b-2xl">
+          <div className="flex items-center space-x-3">
+            {step > 1 && (
+              <button
+                onClick={prevStep}
+                className="px-6 py-3 bg-white border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-100 transition-colors font-semibold"
+              >
+                ← Back
+              </button>
+            )}
+            <button
+              onClick={onClose}
+              className="px-6 py-3 bg-white border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-100 transition-colors font-semibold"
+            >
+              Cancel
+            </button>
+          </div>
+          <div>
+            {step < 3 ? (
+              <button
+                onClick={nextStep}
+                disabled={!validateStep()}
+                className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                  validateStep()
+                    ? "bg-emerald-600 text-white hover:bg-emerald-700"
+                    : "bg-slate-300 text-slate-500 cursor-not-allowed"
+                }`}
+              >
+                Continue →
+              </button>
+            ) : (
+              <button
+                onClick={handleSubmit}
+                disabled={!validateStep()}
+                className={`px-6 py-3 rounded-lg font-semibold transition-all ${
+                  validateStep()
+                    ? "bg-gradient-to-r from-emerald-600 to-blue-600 text-white hover:from-emerald-700 hover:to-blue-700 shadow-lg"
+                    : "bg-slate-300 text-slate-500 cursor-not-allowed"
+                }`}
+              >
+                Create Work Order
+              </button>
+            )}
           </div>
         </div>
       </div>

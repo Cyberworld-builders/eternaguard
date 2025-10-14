@@ -42,7 +42,8 @@ mmfh-landing-app/
 │       ├── eternaguard-logo.png      # Official EternaGuard logo (square)
 │       ├── eternaguard-logo-wide.png # Official EternaGuard logo (wide)
 │       ├── eternaguard-hero.png      # Hero section mockup
-│       └── eternaguard-overview.png  # Overview mockup
+│       ├── eternaguard-overview.png  # Overview mockup
+│       └── ar-cemetery-demo.png      # AR navigation demo (iPhone in cemetery)
 ├── IMAGE-SETUP.md       # Instructions for adding images
 ├── MOCKUP-INSTRUCTIONS.md  # Mockup generator docs
 └── README.md           # This file
@@ -70,6 +71,13 @@ Visit **http://localhost:3000/mockups** to access the live mockup generator:
 - Generates 5 professional mockups automatically
 - One-click download for all images
 - Hero section, feature cards, mobile app, drone dashboard, and AR interface
+- **NEW: AR Cemetery Navigation Demo** - Real-world iPhone AR demonstration showing:
+  - Live camera passthrough with AR overlays
+  - Grave marker detection with green highlighting
+  - Information popups (name, dates)
+  - Distance guidance (10m proximity indicator)
+  - AI-powered visual recognition
+  - Works on standard iOS/Android devices
 - Fully integrated into the Next.js app with navigation
 
 See [MOCKUP-INSTRUCTIONS.md](./MOCKUP-INSTRUCTIONS.md) for detailed docs.
