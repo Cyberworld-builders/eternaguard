@@ -20,39 +20,36 @@ export default function Home() {
       <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-slate-200">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                </svg>
-              </div>
-              <div className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-emerald-600 bg-clip-text text-transparent">
-                EternaGuard
-              </div>
+            <div className="flex items-center space-x-3">
+              <img 
+                src="/images/eternaguard-logo-wide.png" 
+                alt="EternaGuard - Secure. Maintain. Innovate." 
+                className="h-10 w-auto"
+              />
             </div>
             <div className="hidden md:flex space-x-8">
-              <a href="#features" className="text-slate-600 hover:text-blue-600 transition-colors">
+              <a href="#features" className="text-slate-600 hover:text-emerald-600 transition-colors">
                 Features
               </a>
-              <a href="#use-cases" className="text-slate-600 hover:text-blue-600 transition-colors">
+              <a href="#use-cases" className="text-slate-600 hover:text-emerald-600 transition-colors">
                 Use Cases
               </a>
-              <a href="#vision" className="text-slate-600 hover:text-blue-600 transition-colors">
-                Vision
-              </a>
-              <a href="/mockups" className="text-slate-600 hover:text-blue-600 transition-colors">
+              <a href="/mockups" className="text-slate-600 hover:text-emerald-600 transition-colors">
                 Mockups
               </a>
-              <a href="/cms-dashboard" className="text-slate-600 hover:text-blue-600 transition-colors">
-                CMS Demo
+              <a href="/cms-dashboard" className="text-slate-600 hover:text-emerald-600 transition-colors">
+                CMS
               </a>
-              <a href="#contact" className="text-slate-600 hover:text-blue-600 transition-colors">
+              <a href="/crm-dashboard" className="text-slate-600 hover:text-emerald-600 transition-colors">
+                CRM
+              </a>
+              <a href="#contact" className="text-slate-600 hover:text-emerald-600 transition-colors">
                 Contact
               </a>
             </div>
             <a
               href="#waitlist"
-              className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/30"
+              className="bg-gradient-to-r from-slate-700 to-emerald-600 text-white px-6 py-2 rounded-full hover:from-slate-800 hover:to-emerald-700 transition-colors shadow-lg shadow-slate-600/30"
             >
               Join Waitlist
             </a>
@@ -64,8 +61,8 @@ export default function Home() {
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-4xl mx-auto mb-12">
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-slate-900 mb-6 leading-tight">
-              EternaGuard
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+              <span className="text-slate-800">Eterna</span><span className="text-emerald-600">Guard</span>
               <span className="block text-2xl sm:text-3xl lg:text-4xl mt-2 font-normal text-slate-700">
                 Property Management System Tailored for Death Care Businesses
               </span>
@@ -94,13 +91,13 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="#waitlist"
-              className="bg-blue-600 text-white px-8 py-4 rounded-full hover:bg-blue-700 transition-all shadow-xl shadow-blue-600/30 text-lg font-semibold hover:scale-105"
+              className="bg-gradient-to-r from-slate-700 to-slate-800 text-white px-8 py-4 rounded-full hover:from-slate-800 hover:to-slate-900 transition-all shadow-xl shadow-slate-700/30 text-lg font-semibold hover:scale-105"
             >
               Get Early Access
           </a>
           <a
               href="#features"
-              className="bg-white text-blue-600 px-8 py-4 rounded-full hover:bg-slate-50 transition-all shadow-xl border-2 border-blue-600 text-lg font-semibold"
+              className="bg-white text-emerald-600 px-8 py-4 rounded-full hover:bg-slate-50 transition-all shadow-xl border-2 border-emerald-600 text-lg font-semibold"
             >
               Learn More
             </a>
@@ -109,20 +106,20 @@ export default function Home() {
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-emerald-600">
+      <section className="py-16 bg-gradient-to-r from-slate-700 via-slate-800 to-emerald-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center text-white">
             <div>
               <div className="text-4xl font-bold mb-2">5-10m</div>
-              <div className="text-blue-100">GPS Accuracy</div>
+              <div className="text-slate-100">GPS Accuracy</div>
             </div>
             <div>
-              <div className="text-4xl font-bold mb-2">24/7</div>
-              <div className="text-blue-100">Autonomous Monitoring</div>
+              <div className="text-4xl font-bold mb-2 text-yellow-400">24/7</div>
+              <div className="text-slate-100">Autonomous Monitoring</div>
             </div>
             <div>
               <div className="text-4xl font-bold mb-2">AI-Powered</div>
-              <div className="text-blue-100">Image Recognition</div>
+              <div className="text-slate-100">Image Recognition</div>
             </div>
           </div>
         </div>
@@ -182,8 +179,8 @@ export default function Home() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {/* Feature 1 */}
             <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-slate-100">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-emerald-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                 </svg>
@@ -209,8 +206,8 @@ export default function Home() {
 
             {/* Feature 3 */}
             <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-slate-100">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-12 h-12 bg-slate-100 rounded-lg flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                 </svg>
               </div>
@@ -235,8 +232,8 @@ export default function Home() {
 
             {/* Feature 5 */}
             <div className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow border border-slate-100">
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
-                <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <div className="w-12 h-12 bg-yellow-100 rounded-lg flex items-center justify-center mb-4">
+                <svg className="w-6 h-6 text-yellow-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
                 </svg>
               </div>
@@ -312,7 +309,7 @@ export default function Home() {
             {/* Expanded Applications */}
             <div className="bg-white p-8 rounded-2xl shadow-xl border border-slate-200">
               <div className="mb-4">
-                  <span className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-semibold">
+                  <span className="bg-emerald-100 text-emerald-700 px-3 py-1 rounded-full text-sm font-semibold">
                   Future Applications
                 </span>
               </div>
@@ -438,20 +435,23 @@ export default function Home() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200 hover:border-blue-300 transition-colors">
+            <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200 hover:border-emerald-300 transition-colors">
               <h3 className="text-xl font-bold text-slate-900 mb-2">🌐 CMS & Marketing</h3>
               <p className="text-slate-600 mb-4">
                 Blog management, SEO optimization, lead capture, and sales funnels all connected to your property data.
               </p>
-              <a href="/cms-dashboard" className="text-blue-600 hover:text-blue-700 font-semibold text-sm inline-flex items-center">
+              <a href="/cms-dashboard" className="text-emerald-600 hover:text-emerald-700 font-semibold text-sm inline-flex items-center">
                 View Demo Dashboard →
               </a>
             </div>
-            <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+            <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200 hover:border-emerald-300 transition-colors">
               <h3 className="text-xl font-bold text-slate-900 mb-2">👥 CRM & Sales</h3>
-              <p className="text-slate-600">
+              <p className="text-slate-600 mb-4">
                 Contract management, customer relationships, and sales pipelines integrated with property information.
               </p>
+              <a href="/crm-dashboard" className="text-emerald-600 hover:text-emerald-700 font-semibold text-sm inline-flex items-center">
+                View Demo Dashboard →
+              </a>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200">
               <h3 className="text-xl font-bold text-slate-900 mb-2">📋 Work Orders</h3>
@@ -499,7 +499,7 @@ export default function Home() {
                     Join Waitlist
                   </button>
                 </div>
-                <p className="mt-4 text-sm text-blue-50">
+                <p className="mt-4 text-sm text-white/80">
                   No spam, ever. Unsubscribe anytime.
                 </p>
               </form>
@@ -521,7 +521,7 @@ export default function Home() {
                 </svg>
                 <div>
                   <div className="font-semibold">Exclusive Updates</div>
-                  <div className="text-sm text-blue-50">Latest features & news</div>
+                  <div className="text-sm text-white/80">Latest features & news</div>
                 </div>
               </div>
               <div className="flex items-start">
@@ -530,10 +530,32 @@ export default function Home() {
                 </svg>
                 <div>
                   <div className="font-semibold">Special Pricing</div>
-                  <div className="text-sm text-blue-50">Founder pricing for early adopters</div>
+                  <div className="text-sm text-white/80">Founder pricing for early adopters</div>
                 </div>
               </div>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Brand Showcase Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-white to-slate-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center">
+            <div className="flex justify-center mb-8">
+              <div className="relative">
+                <img 
+                  src="/images/eternaguard-logo.png" 
+                  alt="EternaGuard - Secure. Maintain. Innovate." 
+                  className="w-auto h-48 sm:h-64 lg:h-80 drop-shadow-2xl"
+                />
+                {/* Glow effect */}
+                <div className="absolute inset-0 bg-gradient-to-r from-slate-700/10 via-emerald-600/10 to-slate-700/10 blur-3xl -z-10 scale-150"></div>
+              </div>
+            </div>
+            <p className="text-lg text-slate-600 max-w-2xl mx-auto">
+              The future of property management starts here. Join us in revolutionizing death care and beyond.
+            </p>
           </div>
         </div>
       </section>
@@ -548,7 +570,7 @@ export default function Home() {
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
               href="mailto:contact@eternaguard.com"
-              className="bg-blue-600 text-white px-8 py-4 rounded-full hover:bg-blue-700 transition-all shadow-lg text-lg font-semibold inline-flex items-center justify-center"
+              className="bg-gradient-to-r from-slate-700 to-slate-800 text-white px-8 py-4 rounded-full hover:from-slate-800 hover:to-slate-900 transition-all shadow-lg text-lg font-semibold inline-flex items-center justify-center"
             >
               <svg className="w-5 h-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
@@ -557,7 +579,7 @@ export default function Home() {
         </a>
         <a
               href="#waitlist"
-              className="bg-white text-blue-600 px-8 py-4 rounded-full hover:bg-slate-50 transition-all shadow-lg border-2 border-blue-600 text-lg font-semibold"
+              className="bg-white text-emerald-600 px-8 py-4 rounded-full hover:bg-slate-50 transition-all shadow-lg border-2 border-emerald-600 text-lg font-semibold"
             >
               Join Waitlist
             </a>
@@ -570,15 +592,12 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
             <div className="md:col-span-2">
-              <div className="flex items-center space-x-2 mb-4">
-                <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
-                  <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                  </svg>
-                </div>
-                <div className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-emerald-400 bg-clip-text text-transparent">
-                  EternaGuard
-                </div>
+              <div className="mb-6">
+                <img 
+                  src="/images/eternaguard-logo-wide.png" 
+                  alt="EternaGuard - Secure. Maintain. Innovate." 
+                  className="h-16 sm:h-20 w-auto"
+                />
               </div>
               <p className="text-slate-400 max-w-md">
                 Next-generation property management platform powered by AI, GPS, and autonomous technology. 
@@ -588,19 +607,19 @@ export default function Home() {
             <div>
               <h3 className="font-semibold mb-4">Platform</h3>
               <ul className="space-y-2 text-slate-400">
-                <li><a href="#features" className="hover:text-blue-400 transition-colors">Features</a></li>
-                <li><a href="#use-cases" className="hover:text-blue-400 transition-colors">Use Cases</a></li>
-                <li><a href="#vision" className="hover:text-blue-400 transition-colors">Vision</a></li>
-                <li><a href="#waitlist" className="hover:text-blue-400 transition-colors">Pricing</a></li>
+                <li><a href="#features" className="hover:text-emerald-400 transition-colors">Features</a></li>
+                <li><a href="#use-cases" className="hover:text-emerald-400 transition-colors">Use Cases</a></li>
+                <li><a href="#vision" className="hover:text-emerald-400 transition-colors">Vision</a></li>
+                <li><a href="#waitlist" className="hover:text-emerald-400 transition-colors">Pricing</a></li>
               </ul>
             </div>
             <div>
               <h3 className="font-semibold mb-4">Company</h3>
               <ul className="space-y-2 text-slate-400">
-                <li><a href="#contact" className="hover:text-blue-400 transition-colors">Contact</a></li>
-                <li><a href="#" className="hover:text-blue-400 transition-colors">About</a></li>
-                <li><a href="#" className="hover:text-blue-400 transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-blue-400 transition-colors">Careers</a></li>
+                <li><a href="#contact" className="hover:text-emerald-400 transition-colors">Contact</a></li>
+                <li><a href="#" className="hover:text-emerald-400 transition-colors">About</a></li>
+                <li><a href="#" className="hover:text-emerald-400 transition-colors">Blog</a></li>
+                <li><a href="#" className="hover:text-emerald-400 transition-colors">Careers</a></li>
               </ul>
             </div>
           </div>
@@ -609,9 +628,9 @@ export default function Home() {
               © 2025 EternaGuard. All rights reserved.
             </p>
             <div className="flex space-x-6 mt-4 md:mt-0">
-              <a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">Privacy</a>
-              <a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">Terms</a>
-              <a href="#" className="text-slate-400 hover:text-blue-400 transition-colors">Security</a>
+              <a href="#" className="text-slate-400 hover:text-emerald-400 transition-colors">Privacy</a>
+              <a href="#" className="text-slate-400 hover:text-emerald-400 transition-colors">Terms</a>
+              <a href="#" className="text-slate-400 hover:text-emerald-400 transition-colors">Security</a>
             </div>
           </div>
         </div>
