@@ -139,10 +139,15 @@ export default function CRMDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
           {/* Recent Contracts */}
           <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6">
-            <div className="flex items-center justify-between mb-6">
-              <h2 className="text-2xl font-bold text-slate-900">Recent Contracts</h2>
-              <button className="text-blue-600 hover:text-blue-700 font-semibold text-sm">View All →</button>
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold text-slate-900">Recent Contracts</h2>
+            <div className="flex items-center space-x-4">
+              <Link href="/crm-dashboard/new-contract" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors text-sm font-semibold">
+                + New Contract
+              </Link>
+              <button className="text-emerald-600 hover:text-emerald-700 font-semibold text-sm">View All →</button>
             </div>
+          </div>
             <div className="space-y-4">
               {recentContracts.map((contract, index) => (
                 <div key={index} className="border border-slate-200 rounded-lg p-4 hover:border-blue-300 transition-colors">
