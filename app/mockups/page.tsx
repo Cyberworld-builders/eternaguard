@@ -533,6 +533,73 @@ export default function MockupsPage() {
                 <canvas ref={arCanvasRef} className="w-full h-auto" />
               </div>
             </div>
+
+            {/* AR Cemetery Navigation Demo */}
+            <div className="bg-gradient-to-br from-emerald-50 to-slate-50 rounded-3xl shadow-2xl p-8 border-2 border-emerald-200">
+              <div className="flex items-center justify-between mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-slate-900 mb-2">AR Cemetery Navigation</h2>
+                  <p className="text-slate-600">Real-world augmented reality demonstration</p>
+                </div>
+                <span className="px-4 py-2 bg-emerald-600 text-white rounded-full text-sm font-semibold">
+                  Live Demo
+                </span>
+              </div>
+              
+              <div className="bg-white rounded-2xl overflow-hidden shadow-lg">
+                <img 
+                  src="/images/ar-cemetery-demo.png" 
+                  alt="AR Cemetery Navigation Demo - iPhone showing augmented reality overlay with grave marker information" 
+                  className="w-full h-auto"
+                />
+              </div>
+
+              <div className="mt-6 space-y-4">
+                <h3 className="text-lg font-semibold text-slate-900">Key Features Demonstrated:</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex items-start space-x-3 bg-white rounded-lg p-4">
+                    <div className="text-2xl">📍</div>
+                    <div>
+                      <h4 className="font-semibold text-slate-900">Real-Time AR Overlay</h4>
+                      <p className="text-sm text-slate-600">Camera passthrough with digital information pinned to physical graves</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3 bg-white rounded-lg p-4">
+                    <div className="text-2xl">🪦</div>
+                    <div>
+                      <h4 className="font-semibold text-slate-900">Interactive Markers</h4>
+                      <p className="text-sm text-slate-600">Tap to view deceased information, dates, and memorial content</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3 bg-white rounded-lg p-4">
+                    <div className="text-2xl">📏</div>
+                    <div>
+                      <h4 className="font-semibold text-slate-900">Distance Guidance</h4>
+                      <p className="text-sm text-slate-600">10m proximity indicator helps navigate to specific locations</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start space-x-3 bg-white rounded-lg p-4">
+                    <div className="text-2xl">🎯</div>
+                    <div>
+                      <h4 className="font-semibold text-slate-900">Visual Recognition</h4>
+                      <p className="text-sm text-slate-600">AI identifies and highlights markers in view with green borders</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mt-4">
+                  <div className="flex items-start space-x-3">
+                    <div className="text-2xl">💡</div>
+                    <div>
+                      <h4 className="font-semibold text-slate-900 mb-1">Technology Stack</h4>
+                      <p className="text-sm text-slate-600">
+                        Built with ARKit/ARCore, combining GPS coordinates, computer vision, and vector database lookups for seamless grave identification. Works on standard iOS and Android devices.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
           {/* Footer CTA */}

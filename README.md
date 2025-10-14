@@ -80,6 +80,12 @@ See [MOCKUP-INSTRUCTIONS.md](./MOCKUP-INSTRUCTIONS.md) for detailed docs.
 Visit **http://localhost:3000/cms-dashboard** to see the Phase 1 marketing features:
 - **Analytics Overview**: Google Analytics-style metrics with trends
 - **Social Media Campaigns**: Facebook, LinkedIn, Instagram, Twitter/X performance
+- **Campaign Creation Modal**: Click "+ Create Campaign" to launch a full-featured campaign builder
+  - Multi-platform selection (Facebook, Instagram, LinkedIn, Twitter/X)
+  - Budget and duration settings
+  - Target audience configuration
+  - Campaign type selection
+  - Ready for social media API integration
 - **SEO Metrics**: Organic traffic, keywords, backlinks, domain authority
 - **Content Management**: Blog post tracking with status indicators
 - **Top Pages**: Performance metrics for key landing pages
