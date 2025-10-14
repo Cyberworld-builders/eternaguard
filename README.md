@@ -29,10 +29,15 @@ mmfh-landing-app/
 │   ├── globals.css       # Global styles
 │   ├── mockups/
 │   │   └── page.tsx      # Mockup generator page
-│   └── cms-dashboard/
-│       └── page.tsx      # CMS Dashboard demo
+│   ├── cms-dashboard/
+│   │   └── page.tsx      # CMS Dashboard demo
+│   └── crm-dashboard/
+│       └── page.tsx      # CRM Dashboard demo
 ├── public/
-│   └── images/          # Place your mockup images here
+│   └── images/
+│       ├── eternaguard-logo.png      # Official EternaGuard logo
+│       ├── eternaguard-hero.png      # Hero section mockup
+│       └── eternaguard-overview.png  # Overview mockup
 ├── IMAGE-SETUP.md       # Instructions for adding images
 ├── MOCKUP-INSTRUCTIONS.md  # Mockup generator docs
 └── README.md           # This file
@@ -41,6 +46,7 @@ mmfh-landing-app/
 ## 🎨 Features
 
 - ✅ **Modern Design**: Gradient backgrounds, smooth animations, glassmorphism effects
+- ✅ **Professional Branding**: Custom EternaGuard logo with shield icon featuring drone, monument, and tree
 - ✅ **Fully Responsive**: Mobile-first design that looks great on all devices
 - ✅ **SEO Optimized**: Proper metadata and semantic HTML
 - ✅ **Accessible**: WCAG compliant with keyboard navigation
@@ -48,6 +54,7 @@ mmfh-landing-app/
 - ✅ **TypeScript**: Fully typed for better development experience
 - ✅ **Built-in Mockup Generator**: Live mockup generator at `/mockups` route
 - ✅ **CMS Dashboard Demo**: Interactive analytics dashboard at `/cms-dashboard` route
+- ✅ **CRM Dashboard Demo**: Customer relationships and work orders at `/crm-dashboard` route
 
 ## 📸 Mockups & Images
 
@@ -77,6 +84,23 @@ Features mock data demonstrating:
 - Unified dashboard consolidating all marketing metrics
 - Real-time performance indicators and trend analysis
 
+## 👥 CRM Dashboard Demo
+
+### Customer Relationship Management
+Visit **http://localhost:3000/crm-dashboard** to see the Phase 2 CRM features:
+- **Sales Pipeline**: 5-stage funnel with lead tracking and revenue forecasting
+- **Contract Management**: Active contracts with customer details and service types
+- **Work Orders**: Task tracking with priorities, assignments, and status
+- **Customer Tracking**: Relationship management with interaction history
+- **Task Management**: Daily tasks with priority levels and due dates
+- **Revenue Analytics**: Performance metrics and trend analysis
+
+Features mock data demonstrating:
+- Complete sales lifecycle from lead to closed deal
+- Integration with property management system
+- Automated work order creation from property issues
+- 360° customer view with all interactions and contracts
+
 ### Adding Static Images
 See [IMAGE-SETUP.md](./IMAGE-SETUP.md) for instructions on adding custom images:
 1. Save your images as `eternaguard-hero.png` and `eternaguard-overview.png`
@@ -85,14 +109,20 @@ See [IMAGE-SETUP.md](./IMAGE-SETUP.md) for instructions on adding custom images:
 
 ## 🎨 Customization
 
-### Colors
+### Branding
 
-The site uses a blue-to-emerald gradient color scheme. Main colors:
+**Logo**: The official EternaGuard logo is located at `/public/images/eternaguard-logo.png`
+- Shield icon with drone, monument, and tree elements
+- Tagline: "SECURE. MAINTAIN. INNOVATE."
+- Used consistently across all pages
+
+**Colors**: The site uses a blue-to-emerald gradient color scheme matching the logo:
 - Primary: `blue-600` (#2563eb)
-- Secondary: `emerald-600` (#059669)
-- Accent gradients throughout
+- Secondary: `emerald-600` (#059669) 
+- Dark slate: `slate-700` (#334155)
+- Gold accent: `yellow-600` (#ca8a04)
 
-To change colors, search and replace in `app/page.tsx`:
+To change colors, search and replace across pages:
 - `blue-600` → your primary color
 - `emerald-600` → your secondary color
 
