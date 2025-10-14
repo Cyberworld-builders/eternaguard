@@ -37,14 +37,14 @@ export default function Home() {
               <a href="#use-cases" className="text-slate-600 hover:text-blue-600 transition-colors">
                 Use Cases
               </a>
-              <a href="#vision" className="text-slate-600 hover:text-blue-600 transition-colors">
-                Vision
-              </a>
               <a href="/mockups" className="text-slate-600 hover:text-blue-600 transition-colors">
                 Mockups
               </a>
               <a href="/cms-dashboard" className="text-slate-600 hover:text-blue-600 transition-colors">
-                CMS Demo
+                CMS
+              </a>
+              <a href="/crm-dashboard" className="text-slate-600 hover:text-blue-600 transition-colors">
+                CRM
               </a>
               <a href="#contact" className="text-slate-600 hover:text-blue-600 transition-colors">
                 Contact
@@ -447,11 +447,14 @@ export default function Home() {
                 View Demo Dashboard →
               </a>
             </div>
-            <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200">
+            <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200 hover:border-blue-300 transition-colors">
               <h3 className="text-xl font-bold text-slate-900 mb-2">👥 CRM & Sales</h3>
-              <p className="text-slate-600">
+              <p className="text-slate-600 mb-4">
                 Contract management, customer relationships, and sales pipelines integrated with property information.
               </p>
+              <a href="/crm-dashboard" className="text-blue-600 hover:text-blue-700 font-semibold text-sm inline-flex items-center">
+                View Demo Dashboard →
+              </a>
             </div>
             <div className="bg-white p-6 rounded-xl shadow-md border border-slate-200">
               <h3 className="text-xl font-bold text-slate-900 mb-2">📋 Work Orders</h3>
