@@ -5,6 +5,7 @@ import Link from "next/link";
 
 export default function CMSDashboard() {
   const [timeRange, setTimeRange] = useState("30d");
+  const [showCampaignModal, setShowCampaignModal] = useState(false);
 
   // Mock Analytics Data
   const analyticsData = {
@@ -180,8 +181,11 @@ export default function CMSDashboard() {
         <div className="bg-white rounded-xl shadow-lg border border-slate-200 p-6 mb-8">
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold text-slate-900">Social Media Campaigns</h2>
-            <button className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm">
-              Create Campaign
+            <button 
+              onClick={() => setShowCampaignModal(true)}
+              className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 transition-colors text-sm font-semibold"
+            >
+              + Create Campaign
             </button>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -392,6 +396,214 @@ export default function CMSDashboard() {
           </div>
         </div>
       </div>
+
+      {/* Campaign Creation Modal */}
+      {showCampaignModal && (
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+            {/* Modal Header */}
+            <div className="sticky top-0 bg-white border-b border-slate-200 px-8 py-6 flex items-center justify-between rounded-t-2xl">
+              <div>
+                <h2 className="text-3xl font-bold text-slate-900">Create Campaign</h2>
+                <p className="text-slate-600 mt-1">Launch a new social media marketing campaign</p>
+              </div>
+              <button
+                onClick={() => setShowCampaignModal(false)}
+                className="text-slate-400 hover:text-slate-600 transition-colors p-2 hover:bg-slate-100 rounded-full"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Modal Content */}
+            <div className="px-8 py-6 space-y-6">
+              {/* Campaign Name */}
+              <div>
+                <label htmlFor="campaignName" className="block text-sm font-semibold text-slate-700 mb-2">
+                  Campaign Name
+                </label>
+                <input
+                  type="text"
+                  id="campaignName"
+                  placeholder="e.g., Spring 2024 Cemetery Services"
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+
+              {/* Platform Selection */}
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-3">
+                  Select Platforms
+                </label>
+                <div className="grid grid-cols-2 gap-4">
+                  {[
+                    { name: 'Facebook', icon: '📘', color: 'bg-blue-50 border-blue-200 hover:border-blue-400' },
+                    { name: 'Instagram', icon: '📷', color: 'bg-pink-50 border-pink-200 hover:border-pink-400' },
+                    { name: 'LinkedIn', icon: '💼', color: 'bg-blue-50 border-blue-300 hover:border-blue-500' },
+                    { name: 'Twitter/X', icon: '🐦', color: 'bg-sky-50 border-sky-200 hover:border-sky-400' },
+                  ].map((platform) => (
+                    <div
+                      key={platform.name}
+                      className={`${platform.color} border-2 rounded-lg p-4 cursor-pointer transition-all hover:scale-105`}
+                    >
+                      <div className="flex items-center space-x-3">
+                        <input
+                          type="checkbox"
+                          id={platform.name}
+                          className="w-5 h-5 text-blue-600 rounded focus:ring-2 focus:ring-blue-500"
+                        />
+                        <label htmlFor={platform.name} className="flex items-center space-x-2 cursor-pointer">
+                          <span className="text-2xl">{platform.icon}</span>
+                          <span className="font-semibold text-slate-700">{platform.name}</span>
+                        </label>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* Campaign Type */}
+              <div>
+                <label htmlFor="campaignType" className="block text-sm font-semibold text-slate-700 mb-2">
+                  Campaign Type
+                </label>
+                <select
+                  id="campaignType"
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                >
+                  <option>Brand Awareness</option>
+                  <option>Lead Generation</option>
+                  <option>Engagement</option>
+                  <option>Traffic</option>
+                  <option>Conversions</option>
+                  <option>Event Promotion</option>
+                </select>
+              </div>
+
+              {/* Campaign Message */}
+              <div>
+                <label htmlFor="campaignMessage" className="block text-sm font-semibold text-slate-700 mb-2">
+                  Campaign Message
+                </label>
+                <textarea
+                  id="campaignMessage"
+                  rows={4}
+                  placeholder="Write your campaign message here..."
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 resize-none"
+                />
+                <p className="text-xs text-slate-500 mt-1">This will be adapted for each platform&apos;s best practices</p>
+              </div>
+
+              {/* Budget & Duration */}
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="budget" className="block text-sm font-semibold text-slate-700 mb-2">
+                    Budget (USD)
+                  </label>
+                  <div className="relative">
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">$</span>
+                    <input
+                      type="number"
+                      id="budget"
+                      placeholder="500"
+                      className="w-full pl-8 pr-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <label htmlFor="duration" className="block text-sm font-semibold text-slate-700 mb-2">
+                    Duration (days)
+                  </label>
+                  <input
+                    type="number"
+                    id="duration"
+                    placeholder="30"
+                    className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                  />
+                </div>
+              </div>
+
+              {/* Target Audience */}
+              <div>
+                <label className="block text-sm font-semibold text-slate-700 mb-2">
+                  Target Audience
+                </label>
+                <div className="space-y-3">
+                  <div className="flex items-center space-x-3">
+                    <input type="checkbox" id="age-18-34" className="w-4 h-4 text-blue-600 rounded" />
+                    <label htmlFor="age-18-34" className="text-slate-700">Ages 18-34</label>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <input type="checkbox" id="age-35-54" className="w-4 h-4 text-blue-600 rounded" />
+                    <label htmlFor="age-35-54" className="text-slate-700">Ages 35-54</label>
+                  </div>
+                  <div className="flex items-center space-x-3">
+                    <input type="checkbox" id="age-55+" className="w-4 h-4 text-blue-600 rounded" defaultChecked />
+                    <label htmlFor="age-55+" className="text-slate-700">Ages 55+</label>
+                  </div>
+                </div>
+              </div>
+
+              {/* Start Date */}
+              <div>
+                <label htmlFor="startDate" className="block text-sm font-semibold text-slate-700 mb-2">
+                  Start Date
+                </label>
+                <input
+                  type="date"
+                  id="startDate"
+                  className="w-full px-4 py-3 border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                />
+              </div>
+
+              {/* API Integration Info */}
+              <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+                <div className="flex items-start space-x-3">
+                  <div className="text-2xl">🔗</div>
+                  <div>
+                    <h4 className="font-semibold text-slate-900 mb-1">API Integration</h4>
+                    <p className="text-sm text-slate-600">
+                      This campaign will be published via official social media APIs. Make sure your accounts are connected in Settings.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Modal Footer */}
+            <div className="sticky bottom-0 bg-slate-50 border-t border-slate-200 px-8 py-6 flex items-center justify-between rounded-b-2xl">
+              <button
+                onClick={() => setShowCampaignModal(false)}
+                className="px-6 py-3 bg-white border border-slate-300 text-slate-700 rounded-lg hover:bg-slate-100 transition-colors font-semibold"
+              >
+                Cancel
+              </button>
+              <div className="flex items-center space-x-3">
+                <button
+                  onClick={() => {
+                    alert('Campaign saved as draft! (Demo only)');
+                    setShowCampaignModal(false);
+                  }}
+                  className="px-6 py-3 bg-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors font-semibold"
+                >
+                  Save as Draft
+                </button>
+                <button
+                  onClick={() => {
+                    alert('Campaign launched! Social APIs would be called here. (Demo only)');
+                    setShowCampaignModal(false);
+                  }}
+                  className="px-6 py-3 bg-gradient-to-r from-blue-600 to-emerald-600 text-white rounded-lg hover:from-blue-700 hover:to-emerald-700 transition-all font-semibold shadow-lg"
+                >
+                  Launch Campaign
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
