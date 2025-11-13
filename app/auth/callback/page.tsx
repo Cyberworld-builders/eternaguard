@@ -13,7 +13,7 @@ export default function AuthCallbackPage() {
     const handleCallback = async () => {
       // Get the authorization code from URL
       const code = searchParams.get("code");
-      const state = searchParams.get("state");
+      // const state = searchParams.get("state"); // Reserved for future CSRF validation
 
       if (!code) {
         setError("No authorization code received");

@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default function DashboardPage() {
   const router = useRouter();
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<{ email?: string; id?: string; created_at?: string } | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -153,12 +153,12 @@ export default function DashboardPage() {
               >
                 Explore Demo
               </a>
-              <a
-                href="/"
+              <button
+                onClick={() => router.push("/")}
                 className="bg-white/20 text-white px-6 py-3 rounded-full hover:bg-white/30 transition-colors font-semibold"
               >
                 Back to Home
-              </a>
+              </button>
             </div>
           </div>
         </div>

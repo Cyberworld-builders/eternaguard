@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 export function LoginButton() {
   const [authenticated, setAuthenticated] = useState(false);
-  const [user, setUser] = useState<any>(null);
+  const [user, setUser] = useState<{ email?: string } | null>(null);
 
   useEffect(() => {
     setAuthenticated(isAuthenticated());
