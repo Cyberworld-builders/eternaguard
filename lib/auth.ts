@@ -42,6 +42,8 @@ export function loginWithCyberWorld() {
   authUrl.searchParams.set("state", state);
   authUrl.searchParams.set("response_type", "code");
 
+  console.log("Redirecting to gateway for authentication:", authUrl.toString());
+
   // Redirect to gateway for authentication
   if (typeof window !== "undefined") {
     window.location.href = authUrl.toString();
