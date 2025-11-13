@@ -1,6 +1,3 @@
-// EternaGuard Prisma Schema
-// Manages EternaGuard-specific database tables
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -11,29 +8,21 @@ datasource db {
   schemas  = ["eternaguard"]
 }
 
-// User profiles for EternaGuard
-// Links to Supabase auth.users for identity
 model UserProfile {
   id          String   @id @default(uuid()) @db.Uuid
   userId      String   @unique @map("user_id") @db.Uuid
-  
-  // Profile information
   displayName String?  @map("display_name")
   bio         String?
   avatarUrl   String?  @map("avatar_url")
   company     String?
   website     String?
   location    String?
-  
-  // EternaGuard-specific settings
   preferences Json     @default("{}")
-  
-  // Metadata
-  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz
-  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz
-  
-  @@map("user_profiles")
-  @@schema("eternaguard")
+  createdAt   DateTime @default(now()) @map("created_at") @db.Timestamptz(6)
+  updatedAt   DateTime @updatedAt @map("updated_at") @db.Timestamptz(6)
+
   @@index([userId])
   @@index([createdAt])
+  @@map("user_profiles")
+  @@schema("eternaguard")
 }
