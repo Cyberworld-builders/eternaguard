@@ -91,7 +91,7 @@ export default function NewContractPage() {
       <header className="bg-white border-b border-slate-200 sticky top-0 z-50">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
-            <Link href="/crm-dashboard" className="flex items-center space-x-3">
+            <Link href="/demo/crm-dashboard" className="flex items-center space-x-3">
               <img 
                 src="/images/eternaguard-logo-wide.png" 
                 alt="EternaGuard - Secure. Maintain. Innovate." 
@@ -100,7 +100,7 @@ export default function NewContractPage() {
               <span className="text-xl font-bold text-slate-600">| New Contract</span>
             </Link>
             <Link
-              href="/crm-dashboard"
+              href="/demo/crm-dashboard"
               className="text-slate-600 hover:text-emerald-600 transition-colors"
             >
               ← Back to CRM

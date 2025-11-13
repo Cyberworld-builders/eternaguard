@@ -79,7 +79,7 @@ export default function CRMDashboard() {
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
-              <Link href="/" className="flex items-center space-x-3">
+              <Link href="/demo" className="flex items-center space-x-3">
                 <img 
                   src="/images/eternaguard-logo-wide.png" 
                   alt="EternaGuard - Secure. Maintain. Innovate." 
@@ -89,7 +89,7 @@ export default function CRMDashboard() {
               </Link>
             </div>
             <Link
-              href="/"
+              href="/demo"
               className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
             >
               Back to Home
@@ -143,7 +143,7 @@ export default function CRMDashboard() {
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-2xl font-bold text-slate-900">Recent Contracts</h2>
               <div className="flex items-center space-x-4">
-                <Link href="/crm-dashboard/new-contract" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors text-sm font-semibold">
+                <Link href="/demo/crm-dashboard/new-contract" className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors text-sm font-semibold">
                   + New Contract
                 </Link>
                 <button className="text-emerald-600 hover:text-emerald-700 font-semibold text-sm">View All →</button>

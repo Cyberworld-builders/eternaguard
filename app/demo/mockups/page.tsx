@@ -452,7 +452,7 @@ export default function MockupsPage() {
       <header className="fixed top-0 w-full bg-white/80 backdrop-blur-md z-50 border-b border-slate-200">
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
-            <Link href="/" className="flex items-center space-x-3">
+            <Link href="/demo" className="flex items-center space-x-3">
               <img 
                 src="/images/eternaguard-logo-wide.png" 
                 alt="EternaGuard - Secure. Maintain. Innovate." 
@@ -461,7 +461,7 @@ export default function MockupsPage() {
               <span className="text-xl font-bold text-slate-600">| Mockups</span>
             </Link>
             <Link
-              href="/"
+              href="/demo"
               className="bg-blue-600 text-white px-6 py-2 rounded-full hover:bg-blue-700 transition-colors shadow-lg shadow-blue-600/30"
             >
               Back to Home

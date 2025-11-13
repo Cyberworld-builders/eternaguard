@@ -122,7 +122,7 @@ export default function CMSDashboard() {
         <nav className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex justify-between items-center">
             <div className="flex items-center space-x-4">
-              <Link href="/" className="flex items-center space-x-3">
+              <Link href="/demo" className="flex items-center space-x-3">
                 <img 
                   src="/images/eternaguard-logo-wide.png" 
                   alt="EternaGuard - Secure. Maintain. Innovate." 
@@ -133,7 +133,7 @@ export default function CMSDashboard() {
             </div>
             <div className="flex items-center space-x-4">
               <Link
-                href="/cms-dashboard/new-post"
+                href="/demo/cms-dashboard/new-post"
                 className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition-colors text-sm font-semibold"
               >
                 + New Post
@@ -149,7 +149,7 @@ export default function CMSDashboard() {
                 <option value="1y">Last Year</option>
               </select>
               <Link
-                href="/"
+                href="/demo"
                 className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors"
               >
                 Back to Home
