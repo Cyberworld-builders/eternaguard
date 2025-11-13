@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import { validateEmail, submitLead } from "@/lib/email-validation";
+import { LoginButton } from "@/components/LoginButton";
 
 export default function Home() {
   const [email, setEmail] = useState("");
@@ -30,7 +31,7 @@ export default function Home() {
     });
 
     if (result.success) {
-      setSubmitted(true);
+    setSubmitted(true);
       setEmail("");
       
       // Reset success message after 5 seconds
@@ -50,20 +51,21 @@ export default function Home() {
           <div className="flex justify-between items-center">
             <div className="flex-1"></div>
             <Image
-              src="/images/eternaguard-logo-wide.png"
-              alt="EternaGuard - Secure. Maintain. Innovate."
+                src="/images/eternaguard-logo-wide.png" 
+                alt="EternaGuard - Secure. Maintain. Innovate." 
               width={300}
               height={84}
               className="h-20 w-auto"
               priority
             />
-            <div className="flex-1 flex justify-end">
+            <div className="flex-1 flex justify-end items-center gap-4">
               <a
                 href="/demo"
-                className="bg-gradient-to-r from-slate-700 to-emerald-600 text-white px-6 py-2 rounded-full hover:from-slate-800 hover:to-emerald-700 transition-all shadow-lg shadow-slate-600/30 font-semibold"
+                className="text-slate-600 hover:text-emerald-600 transition-colors font-semibold"
               >
                 View Demo
               </a>
+              <LoginButton />
             </div>
           </div>
         </nav>
@@ -73,11 +75,11 @@ export default function Home() {
       <main className="pt-32 pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-4xl mx-auto text-center">
           {/* Main Heading */}
-          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
             <span className="text-slate-800">Property Management</span>
             <br />
             <span className="text-emerald-600">Reimagined for Death Care</span>
-          </h1>
+            </h1>
 
           {/* Subheading */}
           <p className="text-xl sm:text-2xl text-slate-600 mb-12 leading-relaxed max-w-3xl mx-auto">
@@ -91,14 +93,14 @@ export default function Home() {
               <div className="text-4xl mb-4">🗺️</div>
               <h3 className="text-lg font-semibold text-slate-800 mb-2">GPS Navigation</h3>
               <p className="text-slate-600">Precise location tracking for every plot and monument</p>
-            </div>
-            
+          </div>
+
             <div className="p-6 bg-white rounded-2xl shadow-lg border border-slate-200">
-              <div className="text-4xl mb-4">🤖</div>
+                <div className="text-4xl mb-4">🤖</div>
               <h3 className="text-lg font-semibold text-slate-800 mb-2">AI-Powered</h3>
               <p className="text-slate-600">Automated image analysis and maintenance alerts</p>
             </div>
-            
+
             <div className="p-6 bg-white rounded-2xl shadow-lg border border-slate-200">
               <div className="text-4xl mb-4">🚁</div>
               <h3 className="text-lg font-semibold text-slate-800 mb-2">Drone Monitoring</h3>
@@ -115,42 +117,42 @@ export default function Home() {
               <p className="text-lg text-slate-700 mb-8">
                 Be the first to know when EternaGuard launches. Get exclusive early access 
                 and special pricing for early adopters.
-              </p>
-
-              {submitted ? (
+            </p>
+            
+            {submitted ? (
                 <div className="bg-emerald-100 border-2 border-emerald-600 rounded-2xl p-6">
                   <div className="text-4xl mb-2">✅</div>
                   <p className="text-emerald-800 font-semibold text-lg">
                     Thank you! We&apos;ll be in touch soon.
                   </p>
-                </div>
-              ) : (
+              </div>
+            ) : (
                 <form onSubmit={handleSubmit} className="space-y-4">
-                  <div className="flex flex-col sm:flex-row gap-4">
-                    <input
-                      type="email"
-                      value={email}
+                <div className="flex flex-col sm:flex-row gap-4">
+                  <input
+                    type="email"
+                    value={email}
                       onChange={(e) => {
                         setEmail(e.target.value);
                         setError(null); // Clear error on input change
                       }}
                       placeholder="Enter your email address"
-                      required
+                    required
                       className={`flex-1 px-6 py-4 rounded-full border-2 focus:outline-none text-lg transition-colors text-slate-900 placeholder:text-slate-500 ${
                         error
                           ? "border-red-500 focus:border-red-600"
                           : "border-slate-300 focus:border-emerald-600"
                       }`}
                       disabled={loading}
-                    />
-                    <button
-                      type="submit"
+                  />
+                  <button
+                    type="submit"
                       disabled={loading}
                       className="bg-gradient-to-r from-slate-700 to-emerald-600 text-white px-8 py-4 rounded-full hover:from-slate-800 hover:to-emerald-700 transition-all shadow-lg shadow-slate-600/30 text-lg font-semibold disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap"
-                    >
+                  >
                       {loading ? "Submitting..." : "Get Early Access"}
-                    </button>
-                  </div>
+                  </button>
+                </div>
                   {error && (
                     <div className="bg-red-50 border-2 border-red-300 rounded-xl p-3 text-red-800 text-sm font-medium">
                       {error}
@@ -158,11 +160,11 @@ export default function Home() {
                   )}
                   <p className="text-sm text-slate-600">
                     No spam. Unsubscribe anytime. We respect your privacy.
-                  </p>
-                </form>
-              )}
+                </p>
+              </form>
+            )}
             </div>
-          </div>
+                </div>
 
           {/* Social Proof / Trust Indicators */}
           <div className="mt-16 pt-16 border-t border-slate-200">
@@ -191,13 +193,13 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-6">
             <div className="flex items-center gap-3">
               <Image
-                src="/images/eternaguard-logo-wide.png"
+                  src="/images/eternaguard-logo-wide.png" 
                 alt="EternaGuard"
                 width={150}
                 height={42}
                 className="h-10 w-auto"
-              />
-            </div>
+                />
+              </div>
             
             <div className="text-center md:text-right">
               <p className="text-slate-600 mb-2">
