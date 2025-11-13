@@ -121,7 +121,7 @@ export default function Home() {
                 <div className="bg-emerald-100 border-2 border-emerald-600 rounded-2xl p-6">
                   <div className="text-4xl mb-2">✅</div>
                   <p className="text-emerald-800 font-semibold text-lg">
-                    Thank you! We'll be in touch soon.
+                    Thank you! We&apos;ll be in touch soon.
                   </p>
                 </div>
               ) : (

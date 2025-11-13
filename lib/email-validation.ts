@@ -69,7 +69,7 @@ export function validateEmail(email: string): EmailValidationResult {
 export async function submitLead(
   email: string,
   product: string,
-  metadata?: Record<string, any>
+  metadata?: Record<string, unknown>
 ): Promise<{ success: boolean; error?: string; message?: string }> {
   try {
     // Get the gateway API URL from environment or use localhost for development
