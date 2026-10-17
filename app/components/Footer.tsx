@@ -25,7 +25,7 @@ export default function Footer() {
               alt="EternaGuard"
               width={180}
               height={50}
-              className="h-12 w-auto mb-4 brightness-0 invert"
+              className="h-12 w-auto mb-4 rounded bg-white p-1"
             />
             <p className="text-slate-400 max-w-md mb-4">
               Cemetery contract management software built for the way cemeteries actually work.
