@@ -391,8 +391,8 @@ export default function Home() {
                 <div className="text-4xl mb-4">🧠</div>
                 <h3 className="text-2xl font-bold text-slate-900 mb-3">Proprietary AI Models</h3>
                 <p className="text-slate-600 mb-4">
-                  Training industry-specific models on your data to become the leading intelligence 
-                  in death care and property management.
+                  Training industry-specific models on cemetery and property management data 
+                  to automate routine tasks and surface insights.
                 </p>
                 <div className="text-sm text-emerald-600 font-semibold">Roadmap 2026</div>
               </div>
@@ -554,7 +554,7 @@ export default function Home() {
               </div>
             </div>
             <p className="text-lg text-slate-600 max-w-2xl mx-auto">
-              The future of property management starts here. Join us in revolutionizing death care and beyond.
+              Built with licensed funeral directors and cemetery sales experience.
             </p>
           </div>
         </div>
@@ -565,7 +565,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="text-4xl font-bold text-slate-900 mb-4">Ready to Transform Your Property Management?</h2>
           <p className="text-xl text-slate-600 mb-8">
-            Let&apos;s discuss how EternaGuard can revolutionize your operations
+            Let&apos;s discuss how EternaGuard can help your cemetery operations
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
