@@ -8,6 +8,13 @@ const PAGES = [
   { path: "/ai-cemetery", title: "AI-Powered Cemetery Management Software | EternaGuard", hasWaitlist: true },
 ];
 
+// Generate unique test IP to avoid rate limiting across tests
+let testIpCounter = 0;
+function getUniqueTestIp(): string {
+  testIpCounter++;
+  return `test-${Date.now()}-${testIpCounter}`;
+}
+
 test.describe("Landing Pages", () => {
   for (const page of PAGES) {
     test(`${page.path} renders correctly`, async ({ page: p }) => {
@@ -163,41 +170,44 @@ test.describe("Waitlist Form", () => {
     // Submit
     await page.locator('#waitlist button[type="submit"]').click();
     
-    // Wait for either success message OR rate limit error (both are valid responses)
-    const successOrError = await Promise.race([
-      page.getByText("on the list").waitFor({ timeout: 5000 }).then(() => "success"),
-      page.getByText("Too many requests").waitFor({ timeout: 5000 }).then(() => "rate_limited"),
-      page.getByText("couldn't process").waitFor({ timeout: 5000 }).then(() => "error"),
-    ]).catch(() => "timeout");
-    
-    // Either success or rate limiting is acceptable for this test
-    expect(["success", "rate_limited"]).toContain(successOrError);
+    // Wait for success message (dev mode logs but returns success)
+    const success = await page.getByText("on the list").waitFor({ timeout: 5000 }).then(() => true).catch(() => false);
+    expect(success).toBe(true);
   });
 });
 
 test.describe("API", () => {
   test("waitlist API validates input", async ({ request }) => {
-    // Missing email - may get 400 or 429 (rate limited)
+    const testIp = getUniqueTestIp();
+    const headers = { "x-test-client-ip": testIp };
+    
+    // Missing email
     const noEmail = await request.post("/api/waitlist", {
-      data: { role: "cemetery_manager" }
+      data: { role: "cemetery_manager" },
+      headers,
     });
-    expect([400, 429]).toContain(noEmail.status());
+    expect(noEmail.status()).toBe(400);
     
     // Invalid email
     const invalidEmail = await request.post("/api/waitlist", {
-      data: { email: "notanemail" }
+      data: { email: "notanemail" },
+      headers,
     });
-    expect([400, 429]).toContain(invalidEmail.status());
+    expect(invalidEmail.status()).toBe(400);
     
-    // Honeypot filled (bot)
+    // Honeypot filled (bot) - should return 200 (fake success to not tip off bot)
     const honeypot = await request.post("/api/waitlist", {
-      data: { email: "test@example.com", website: "http://spam.com" }
+      data: { email: "test@example.com", website: "http://spam.com" },
+      headers,
     });
-    expect([400, 429]).toContain(honeypot.status());
+    expect(honeypot.status()).toBe(200);
+    const honeypotBody = await honeypot.json();
+    expect(honeypotBody.success).toBe(true);
   });
   
   test("waitlist API accepts valid submission", async ({ request }) => {
-    // Use unique email to minimize rate limit collision
+    const testIp = getUniqueTestIp();
+    
     const response = await request.post("/api/waitlist", {
       data: {
         email: `api-test-${Date.now()}@example.com`,
@@ -205,24 +215,26 @@ test.describe("API", () => {
         organization: "Test Cemetery",
         region: "Texas",
         headache: "Tracking pre-need payments"
-      }
+      },
+      headers: { "x-test-client-ip": testIp },
     });
     
-    // May be rate limited, so accept both success and rate limit
-    expect([200, 429]).toContain(response.status());
-    if (response.status() === 200) {
-      const body = await response.json();
-      expect(body.success).toBe(true);
-    }
+    expect(response.status()).toBe(200);
+    const body = await response.json();
+    expect(body.success).toBe(true);
   });
   
   test("waitlist API rate limits repeated requests", async ({ request }) => {
+    const testIp = getUniqueTestIp();
+    const headers = { "x-test-client-ip": testIp };
+    
     // Make multiple requests quickly from the same "IP"
     const requests = [];
     for (let i = 0; i < 10; i++) {
       requests.push(
         request.post("/api/waitlist", {
-          data: { email: `ratelimit-test-${i}@example.com` }
+          data: { email: `ratelimit-test-${i}@example.com` },
+          headers,
         })
       );
     }
