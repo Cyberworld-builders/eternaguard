@@ -1,4 +1,5 @@
 import { test, expect } from "@playwright/test";
+import { resetMockResponse, clearMockRequests } from "./aws-mock-server";
 
 const PAGES = [
   { path: "/", title: "EternaGuard - Cemetery Contract Management Software", hasWaitlist: true },
@@ -119,6 +120,11 @@ test.describe("Demo Pages (noindex)", () => {
 });
 
 test.describe("Waitlist Form", () => {
+  test.beforeEach(async () => {
+    await resetMockResponse();
+    await clearMockRequests();
+  });
+
   test("validates email correctly", async ({ page }) => {
     await page.goto("/");
     await page.locator("#waitlist").scrollIntoViewIfNeeded();
@@ -177,6 +183,11 @@ test.describe("Waitlist Form", () => {
 });
 
 test.describe("API", () => {
+  test.beforeEach(async () => {
+    await resetMockResponse();
+    await clearMockRequests();
+  });
+
   test("waitlist API validates input", async ({ request }) => {
     const testIp = getUniqueTestIp();
     const headers = { "x-test-client-ip": testIp };

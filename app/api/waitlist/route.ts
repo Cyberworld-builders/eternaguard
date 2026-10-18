@@ -9,14 +9,39 @@ const RATE_LIMIT_MAX_REQUESTS = 5;
 const rateLimitStore = new Map<string, { count: number; resetTime: number }>();
 
 function getRateLimitKey(request: NextRequest): string {
-  // Check for test IP header first (used by Playwright tests)
-  const testIp = request.headers.get("x-test-client-ip");
-  if (testIp) {
-    return testIp;
+  // Test IP header only allowed in non-production (for Playwright tests)
+  const isProduction = process.env.VERCEL_ENV === "production";
+  if (!isProduction) {
+    const testIp = request.headers.get("x-test-client-ip");
+    if (testIp) {
+      return testIp;
+    }
+  }
+  // Use Vercel's trusted client IP headers
+  // x-real-ip is the client IP from Vercel's edge
+  // x-forwarded-for first entry is also trusted when behind Vercel
+  const realIp = request.headers.get("x-real-ip");
+  if (realIp) {
+    return realIp.trim();
   }
   const forwarded = request.headers.get("x-forwarded-for");
   const ip = forwarded?.split(",")[0]?.trim() || "unknown";
   return ip;
+}
+
+function getClientIp(request: NextRequest): string {
+  // Get trusted client IP from Vercel's edge headers
+  // x-real-ip is set by Vercel to the true client IP
+  const realIp = request.headers.get("x-real-ip");
+  if (realIp) {
+    return realIp.trim();
+  }
+  // Fallback to first entry in x-forwarded-for (set by Vercel's edge)
+  const forwarded = request.headers.get("x-forwarded-for");
+  if (forwarded) {
+    return forwarded.split(",")[0]?.trim() || "unknown";
+  }
+  return "unknown";
 }
 
 function checkRateLimit(key: string): { allowed: boolean; retryAfter?: number } {
@@ -112,16 +137,19 @@ function validateSubmission(data: unknown): ValidationResult {
   }
 
   // Validate and sanitize optional fields
+  // Limits aligned with backend contract: headache 2000, UTM 200
   const role = typeof submission.role === "string" ? submission.role.trim().slice(0, 100) : undefined;
   const organization = typeof submission.organization === "string" ? submission.organization.trim().slice(0, 200) : undefined;
   const region = typeof submission.region === "string" ? submission.region.trim().slice(0, 100) : undefined;
-  const headache = typeof submission.headache === "string" ? submission.headache.trim().slice(0, 1000) : undefined;
+  const headache = typeof submission.headache === "string" ? submission.headache.trim().slice(0, 2000) : undefined;
   const source_page = typeof submission.source_page === "string" ? submission.source_page.trim().slice(0, 500) : undefined;
-  const utm_source = typeof submission.utm_source === "string" ? submission.utm_source.trim().slice(0, 100) : undefined;
-  const utm_medium = typeof submission.utm_medium === "string" ? submission.utm_medium.trim().slice(0, 100) : undefined;
-  const utm_campaign = typeof submission.utm_campaign === "string" ? submission.utm_campaign.trim().slice(0, 100) : undefined;
-  const consent = typeof submission.consent === "boolean" ? submission.consent : undefined;
-  const consent_text_version = typeof submission.consent_text_version === "string" ? submission.consent_text_version.trim().slice(0, 50) : undefined;
+  const utm_source = typeof submission.utm_source === "string" ? submission.utm_source.trim().slice(0, 200) : undefined;
+  const utm_medium = typeof submission.utm_medium === "string" ? submission.utm_medium.trim().slice(0, 200) : undefined;
+  const utm_campaign = typeof submission.utm_campaign === "string" ? submission.utm_campaign.trim().slice(0, 200) : undefined;
+  // Phase 1: No marketing consent checkbox on form, so consent is always false
+  // Do not send consent=true without an approved consent_text_version
+  const consent = false;
+  const consent_text_version = undefined;
 
   return {
     valid: true,
@@ -141,7 +169,9 @@ function validateSubmission(data: unknown): ValidationResult {
   };
 }
 
-type ProviderResult = { success: true } | { success: false; error: string };
+type ProviderResult = 
+  | { success: true } 
+  | { success: false; error: string; statusCode?: number; retryAfter?: number };
 
 async function sendToResend(data: WaitlistSubmission): Promise<ProviderResult> {
   const apiKey = process.env.RESEND_API_KEY;
@@ -283,7 +313,7 @@ async function sendToWebhook(data: WaitlistSubmission): Promise<ProviderResult> 
   }
 }
 
-async function sendToAws(data: WaitlistSubmission): Promise<ProviderResult> {
+async function sendToAws(data: WaitlistSubmission, request: NextRequest): Promise<ProviderResult> {
   const awsUrl = process.env.WAITLIST_AWS_URL;
   const awsSecret = process.env.WAITLIST_AWS_SECRET;
 
@@ -292,12 +322,24 @@ async function sendToAws(data: WaitlistSubmission): Promise<ProviderResult> {
   }
 
   try {
+    // Get trusted client IP from hosting platform headers
+    const clientIp = getClientIp(request);
+    const userAgent = request.headers.get("user-agent") || "";
+
+    const headers: Record<string, string> = {
+      "Content-Type": "application/json",
+      "x-waitlist-secret": awsSecret,
+      "X-Waitlist-Client-IP": clientIp,
+    };
+
+    // Only add user-agent header if present
+    if (userAgent) {
+      headers["X-Waitlist-User-Agent"] = userAgent;
+    }
+
     const response = await fetch(awsUrl, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-waitlist-secret": awsSecret,
-      },
+      headers,
       body: JSON.stringify({
         email: data.email,
         role: data.role,
@@ -313,8 +355,36 @@ async function sendToAws(data: WaitlistSubmission): Promise<ProviderResult> {
       }),
     });
 
+    // Parse response body to verify { ok: true }
+    let responseBody: { ok?: boolean; error?: string; message?: string } = {};
+    try {
+      responseBody = await response.json();
+    } catch {
+      // Response body might not be JSON
+    }
+
+    // Handle error responses with meaningful propagation
     if (!response.ok) {
-      return { success: false, error: `AWS backend returned ${response.status}` };
+      const retryAfterHeader = response.headers.get("Retry-After");
+      const retryAfter = retryAfterHeader ? parseInt(retryAfterHeader, 10) : undefined;
+      const errorMessage = responseBody.error || responseBody.message || `AWS backend returned ${response.status}`;
+      
+      // Propagate 400 (bad request), 429 (rate limit), 503 (unavailable)
+      if (response.status === 400 || response.status === 429 || response.status === 503) {
+        return { 
+          success: false, 
+          error: errorMessage,
+          statusCode: response.status,
+          retryAfter: response.status === 429 ? retryAfter : undefined,
+        };
+      }
+      
+      return { success: false, error: errorMessage, statusCode: response.status };
+    }
+
+    // Verify backend returned { ok: true }
+    if (responseBody.ok !== true) {
+      return { success: false, error: "Backend did not confirm success" };
     }
 
     return { success: true };
@@ -341,7 +411,7 @@ function hasProviderConfigured(): boolean {
   return false;
 }
 
-async function submitToProvider(data: WaitlistSubmission): Promise<ProviderResult> {
+async function submitToProvider(data: WaitlistSubmission, request: NextRequest): Promise<ProviderResult> {
   const provider = process.env.EMAIL_PROVIDER?.toLowerCase();
 
   switch (provider) {
@@ -354,11 +424,11 @@ async function submitToProvider(data: WaitlistSubmission): Promise<ProviderResul
     case "webhook":
       return sendToWebhook(data);
     case "aws":
-      return sendToAws(data);
+      return sendToAws(data, request);
     default:
-      // Try providers in order of preference
+      // Try providers in order of preference (AWS first when configured)
       if (process.env.WAITLIST_AWS_URL && process.env.WAITLIST_AWS_SECRET) {
-        return sendToAws(data);
+        return sendToAws(data, request);
       }
       if (process.env.RESEND_API_KEY && process.env.RESEND_AUDIENCE_ID) {
         return sendToResend(data);
@@ -442,7 +512,7 @@ export async function POST(request: NextRequest) {
   }
 
   // Submit to email provider
-  const result = await submitToProvider(validation.sanitized);
+  const result = await submitToProvider(validation.sanitized, request);
 
   if (!result.success) {
     console.error("[WAITLIST] Provider error:", result.error);
@@ -451,6 +521,32 @@ export async function POST(request: NextRequest) {
     if (isProduction && result.error === "No email provider configured") {
       return NextResponse.json(
         { error: "Signups are temporarily unavailable. Please email contact@eternaguard.com" },
+        { status: 503 }
+      );
+    }
+    
+    // Propagate meaningful backend errors instead of collapsing to generic 500
+    if (result.statusCode === 400) {
+      return NextResponse.json(
+        { error: result.error || "Invalid request" },
+        { status: 400 }
+      );
+    }
+    
+    if (result.statusCode === 429) {
+      const headers: Record<string, string> = {};
+      if (result.retryAfter) {
+        headers["Retry-After"] = String(result.retryAfter);
+      }
+      return NextResponse.json(
+        { error: result.error || "Too many requests. Please try again later." },
+        { status: 429, headers }
+      );
+    }
+    
+    if (result.statusCode === 503) {
+      return NextResponse.json(
+        { error: result.error || "Service temporarily unavailable. Please try again later." },
         { status: 503 }
       );
     }

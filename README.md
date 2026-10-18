@@ -123,8 +123,14 @@ WAITLIST_AWS_URL=https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/prod/wai
 WAITLIST_AWS_SECRET=your-secret-key
 ```
 
-The AWS provider POSTs JSON to Jay's backend (API Gateway → Lambda → DynamoDB, with SES double opt-in):
+The AWS provider POSTs JSON to Jay's shared backend (API Gateway → Lambda → DynamoDB). Phase 1 is capture only: SES confirmation emails are deferred; addresses stay pending/unverified.
 
+**Request headers:**
+- `x-waitlist-secret`: Authentication secret
+- `X-Waitlist-Client-IP`: Server-generated client IP from Vercel's trusted headers
+- `X-Waitlist-User-Agent`: User's browser user-agent (when available)
+
+**Payload:**
 ```json
 {
   "email": "user@example.com",
@@ -136,12 +142,16 @@ The AWS provider POSTs JSON to Jay's backend (API Gateway → Lambda → DynamoD
   "utm_source": "google",
   "utm_medium": "cpc",
   "utm_campaign": "cemetery-software",
-  "consent": true,
-  "consent_text_version": "v1"
+  "consent": false,
+  "consent_text_version": null
 }
 ```
 
-The request includes an `x-waitlist-secret` header for authentication. Any 2xx response is treated as success.
+**Field limits:** headache 2000 chars, UTM values 200 chars each.
+
+**Phase 1 consent:** No marketing checkbox on form, so `consent` is always `false`. Never send `consent: true` without an approved `consent_text_version`.
+
+**Response:** Backend must return `{ "ok": true }` on success. Errors 400/429/503 are propagated to the client with meaningful messages. A 429 response's `Retry-After` header is forwarded.
 
 #### Fallback Behavior
 
