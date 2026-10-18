@@ -10,10 +10,11 @@ const PAGES = [
 ];
 
 // Generate unique test IP to avoid rate limiting across tests
+// Uses 198.51.100.0/24 (TEST-NET-2, RFC 5737) range for test addresses
 let testIpCounter = 0;
 function getUniqueTestIp(): string {
   testIpCounter++;
-  return `test-${Date.now()}-${testIpCounter}`;
+  return `198.51.100.${testIpCounter % 256}`;
 }
 
 test.describe("Landing Pages", () => {

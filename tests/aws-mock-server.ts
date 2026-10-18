@@ -1,4 +1,5 @@
 import { createServer, IncomingMessage, ServerResponse } from "http";
+import { isIP } from "node:net";
 
 interface CapturedRequest {
   method: string;
@@ -6,6 +7,11 @@ interface CapturedRequest {
   headers: Record<string, string | string[] | undefined>;
   body: Record<string, unknown>;
   timestamp: number;
+}
+
+function hasDisallowedControlChars(value: unknown): boolean {
+  if (typeof value !== "string") return false;
+  return /[\x00-\x08\x0B\x0C\x0E-\x1F]/.test(value);
 }
 
 export class AwsMockServer {
@@ -80,6 +86,27 @@ export class AwsMockServer {
             parsedBody = JSON.parse(body);
           } catch {
             // Body might not be JSON
+          }
+
+          // Validate X-Waitlist-Client-IP header (required and must be valid IP)
+          const clientIpHeader = req.headers["x-waitlist-client-ip"];
+          const clientIp = Array.isArray(clientIpHeader) ? clientIpHeader[0] : clientIpHeader;
+          if (!clientIp || !isIP(clientIp)) {
+            res.setHeader("Content-Type", "application/json");
+            res.statusCode = 400;
+            res.end(JSON.stringify({ error: "Missing or invalid client IP" }));
+            return;
+          }
+
+          // Validate that fields don't contain disallowed control characters
+          const fieldsToValidate = ["role", "organization", "region", "headache", "source_page", "utm_source", "utm_medium", "utm_campaign"];
+          for (const field of fieldsToValidate) {
+            if (hasDisallowedControlChars(parsedBody[field])) {
+              res.setHeader("Content-Type", "application/json");
+              res.statusCode = 400;
+              res.end(JSON.stringify({ error: "Invalid signup" }));
+              return;
+            }
           }
 
           this.requests.push({

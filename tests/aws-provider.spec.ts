@@ -14,13 +14,13 @@ test.beforeEach(async () => {
 test.describe("AWS Provider Integration", () => {
   test.describe("Request Headers", () => {
     test("sends X-Waitlist-Client-IP header from server-generated IP", async ({ request }) => {
+      const testIp = "203.0.113.42";
       const response = await request.post("/api/waitlist", {
         data: {
           email: `headers-test-${Date.now()}@example.com`,
         },
         headers: {
-          "x-test-client-ip": `test-ip-${Date.now()}`,
-          "x-real-ip": "203.0.113.42",
+          "x-test-client-ip": testIp,
         },
       });
 
@@ -28,7 +28,7 @@ test.describe("AWS Provider Integration", () => {
 
       const lastRequest = await getMockLastRequest();
       expect(lastRequest).toBeDefined();
-      expect(lastRequest?.headers["x-waitlist-client-ip"]).toBeDefined();
+      expect(lastRequest?.headers["x-waitlist-client-ip"]).toBe(testIp);
     });
 
     test("sends X-Waitlist-User-Agent header when browser provides user-agent", async ({ request }) => {
@@ -37,7 +37,7 @@ test.describe("AWS Provider Integration", () => {
           email: `ua-test-${Date.now()}@example.com`,
         },
         headers: {
-          "x-test-client-ip": `test-ip-${Date.now()}`,
+          "x-test-client-ip": "203.0.113.43",
         },
       });
 
@@ -57,7 +57,7 @@ test.describe("AWS Provider Integration", () => {
           email: `secret-test-${Date.now()}@example.com`,
         },
         headers: {
-          "x-test-client-ip": `test-ip-${Date.now()}`,
+          "x-test-client-ip": "203.0.113.50",
         },
       });
 
@@ -66,6 +66,69 @@ test.describe("AWS Provider Integration", () => {
       const lastRequest = await getMockLastRequest();
       expect(lastRequest).toBeDefined();
       expect(lastRequest?.headers["x-waitlist-secret"]).toBe(MOCK_SECRET);
+    });
+
+    test("accepts valid IPv4 address", async ({ request }) => {
+      const response = await request.post("/api/waitlist", {
+        data: {
+          email: `ipv4-test-${Date.now()}@example.com`,
+        },
+        headers: {
+          "x-test-client-ip": "192.168.1.100",
+        },
+      });
+
+      expect(response.status()).toBe(200);
+
+      const lastRequest = await getMockLastRequest();
+      expect(lastRequest?.headers["x-waitlist-client-ip"]).toBe("192.168.1.100");
+    });
+
+    test("accepts valid IPv6 address", async ({ request }) => {
+      const response = await request.post("/api/waitlist", {
+        data: {
+          email: `ipv6-test-${Date.now()}@example.com`,
+        },
+        headers: {
+          "x-test-client-ip": "2001:db8::1",
+        },
+      });
+
+      expect(response.status()).toBe(200);
+
+      const lastRequest = await getMockLastRequest();
+      expect(lastRequest?.headers["x-waitlist-client-ip"]).toBe("2001:db8::1");
+    });
+
+    test("returns 400 for invalid client IP", async ({ request }) => {
+      const response = await request.post("/api/waitlist", {
+        data: {
+          email: `invalid-ip-test-${Date.now()}@example.com`,
+        },
+        headers: {
+          "x-test-client-ip": "not-an-ip",
+        },
+      });
+
+      expect(response.status()).toBe(400);
+      const body = await response.json();
+      expect(body.error).toBe("Missing or invalid client IP");
+    });
+
+    test("returns 400 when client IP header is empty", async ({ request }) => {
+      // Pass empty x-test-client-ip to simulate missing IP
+      const response = await request.post("/api/waitlist", {
+        data: {
+          email: `missing-ip-test-${Date.now()}@example.com`,
+        },
+        headers: {
+          "x-test-client-ip": "",
+        },
+      });
+
+      expect(response.status()).toBe(400);
+      const body = await response.json();
+      expect(body.error).toBe("Missing or invalid client IP");
     });
   });
 
@@ -77,7 +140,7 @@ test.describe("AWS Provider Integration", () => {
         data: {
           email: `ok-true-${Date.now()}@example.com`,
         },
-        headers: { "x-test-client-ip": `test-ip-${Date.now()}` },
+        headers: { "x-test-client-ip": "203.0.113.44" },
       });
 
       expect(response.status()).toBe(200);
@@ -92,7 +155,7 @@ test.describe("AWS Provider Integration", () => {
         data: {
           email: `no-ok-${Date.now()}@example.com`,
         },
-        headers: { "x-test-client-ip": `test-ip-${Date.now()}` },
+        headers: { "x-test-client-ip": "203.0.113.45" },
       });
 
       expect(response.status()).toBe(500);
@@ -110,7 +173,7 @@ test.describe("AWS Provider Integration", () => {
         data: {
           email: `bad-request-${Date.now()}@example.com`,
         },
-        headers: { "x-test-client-ip": `test-ip-${Date.now()}` },
+        headers: { "x-test-client-ip": "203.0.113.46" },
       });
 
       expect(response.status()).toBe(400);
@@ -125,7 +188,7 @@ test.describe("AWS Provider Integration", () => {
         data: {
           email: `rate-limit-${Date.now()}@example.com`,
         },
-        headers: { "x-test-client-ip": `test-ip-${Date.now()}` },
+        headers: { "x-test-client-ip": "203.0.113.47" },
       });
 
       expect(response.status()).toBe(429);
@@ -141,7 +204,7 @@ test.describe("AWS Provider Integration", () => {
         data: {
           email: `unavailable-${Date.now()}@example.com`,
         },
-        headers: { "x-test-client-ip": `test-ip-${Date.now()}` },
+        headers: { "x-test-client-ip": "203.0.113.48" },
       });
 
       expect(response.status()).toBe(503);
@@ -156,7 +219,7 @@ test.describe("AWS Provider Integration", () => {
         data: {
           email: `rate-not-success-${Date.now()}@example.com`,
         },
-        headers: { "x-test-client-ip": `test-ip-${Date.now()}` },
+        headers: { "x-test-client-ip": "203.0.113.49" },
       });
 
       // Must be 429, not 200
@@ -176,7 +239,7 @@ test.describe("AWS Provider Integration", () => {
           consent: true, // Client sends true, but server should override
           consent_text_version: "v1",
         },
-        headers: { "x-test-client-ip": `test-ip-${Date.now()}` },
+        headers: { "x-test-client-ip": "203.0.113.51" },
       });
 
       expect(response.status()).toBe(200);
@@ -192,26 +255,28 @@ test.describe("AWS Provider Integration", () => {
   });
 
   test.describe("Duplicate Submission Handling", () => {
-    test("handles duplicate email submission based on backend response", async ({ request }) => {
+    test("handles duplicate email submission - backend returns 200 ok:true", async ({ request }) => {
       const duplicateEmail = `duplicate-${Date.now()}@example.com`;
 
       // First submission succeeds
       await setMockResponse(200, { ok: true });
       const first = await request.post("/api/waitlist", {
         data: { email: duplicateEmail },
-        headers: { "x-test-client-ip": `test-ip-first-${Date.now()}` },
+        headers: { "x-test-client-ip": "203.0.113.10" },
       });
       expect(first.status()).toBe(200);
+      const firstBody = await first.json();
+      expect(firstBody.success).toBe(true);
 
-      // Second submission - backend returns 400 for duplicate
-      await setMockResponse(400, { error: "Email already registered" });
+      // Second submission - backend returns 200 ok:true for duplicate (updates existing record)
+      await setMockResponse(200, { ok: true });
       const second = await request.post("/api/waitlist", {
         data: { email: duplicateEmail },
-        headers: { "x-test-client-ip": `test-ip-second-${Date.now()}` },
+        headers: { "x-test-client-ip": "203.0.113.11" },
       });
-      expect(second.status()).toBe(400);
-      const body = await second.json();
-      expect(body.error).toBe("Email already registered");
+      expect(second.status()).toBe(200);
+      const secondBody = await second.json();
+      expect(secondBody.success).toBe(true);
     });
   });
 
@@ -224,7 +289,7 @@ test.describe("AWS Provider Integration", () => {
           email: `headache-limit-${Date.now()}@example.com`,
           headache: longHeadache,
         },
-        headers: { "x-test-client-ip": `test-ip-${Date.now()}` },
+        headers: { "x-test-client-ip": "203.0.113.52" },
       });
 
       expect(response.status()).toBe(200);
@@ -241,7 +306,7 @@ test.describe("AWS Provider Integration", () => {
           email: `headache-truncate-${Date.now()}@example.com`,
           headache: extraLongHeadache,
         },
-        headers: { "x-test-client-ip": `test-ip-${Date.now()}` },
+        headers: { "x-test-client-ip": "203.0.113.53" },
       });
 
       expect(response.status()).toBe(200);
@@ -260,7 +325,7 @@ test.describe("AWS Provider Integration", () => {
           utm_medium: longUtm,
           utm_campaign: longUtm,
         },
-        headers: { "x-test-client-ip": `test-ip-${Date.now()}` },
+        headers: { "x-test-client-ip": "203.0.113.54" },
       });
 
       expect(response.status()).toBe(200);
@@ -279,7 +344,7 @@ test.describe("AWS Provider Integration", () => {
           email: `utm-truncate-${Date.now()}@example.com`,
           utm_source: extraLongUtm,
         },
-        headers: { "x-test-client-ip": `test-ip-${Date.now()}` },
+        headers: { "x-test-client-ip": "203.0.113.55" },
       });
 
       expect(response.status()).toBe(200);
@@ -303,7 +368,7 @@ test.describe("AWS Provider Integration", () => {
           utm_medium: "cpc",
           utm_campaign: "cemetery-software",
         },
-        headers: { "x-test-client-ip": `test-ip-${Date.now()}` },
+        headers: { "x-test-client-ip": "203.0.113.56" },
       });
 
       expect(response.status()).toBe(200);
@@ -317,6 +382,41 @@ test.describe("AWS Provider Integration", () => {
       expect(lastRequest?.body.utm_source).toBe("google");
       expect(lastRequest?.body.utm_medium).toBe("cpc");
       expect(lastRequest?.body.utm_campaign).toBe("cemetery-software");
+    });
+  });
+
+  test.describe("Control Character Handling", () => {
+    test("strips disallowed control characters from fields before sending", async ({ request }) => {
+      const response = await request.post("/api/waitlist", {
+        data: {
+          email: `control-chars-${Date.now()}@example.com`,
+          role: "manager\x00with\x08nulls",
+          headache: "Test\x0Bwith\x0Ccontrol\x1Fchars",
+        },
+        headers: { "x-test-client-ip": "203.0.113.60" },
+      });
+
+      expect(response.status()).toBe(200);
+
+      const lastRequest = await getMockLastRequest();
+      expect(lastRequest?.body.role).toBe("managerwithnulls");
+      expect(lastRequest?.body.headache).toBe("Testwithcontrolchars");
+    });
+
+    test("allows tab, LF, and CR in fields", async ({ request }) => {
+      const headacheWithAllowedChars = "Line 1\tTab\nLine 2\rCarriage return";
+      const response = await request.post("/api/waitlist", {
+        data: {
+          email: `allowed-chars-${Date.now()}@example.com`,
+          headache: headacheWithAllowedChars,
+        },
+        headers: { "x-test-client-ip": "203.0.113.61" },
+      });
+
+      expect(response.status()).toBe(200);
+
+      const lastRequest = await getMockLastRequest();
+      expect(lastRequest?.body.headache).toBe(headacheWithAllowedChars);
     });
   });
 });

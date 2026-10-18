@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { isIP } from "node:net";
 
 const RATE_LIMIT_WINDOW_MS = 60 * 1000; // 1 minute
 const RATE_LIMIT_MAX_REQUESTS = 5;
@@ -29,19 +30,45 @@ function getRateLimitKey(request: NextRequest): string {
   return ip;
 }
 
-function getClientIp(request: NextRequest): string {
-  // Get trusted client IP from Vercel's edge headers
+interface ClientIpResult {
+  ip: string | null;
+  error?: string;
+}
+
+function getClientIp(request: NextRequest): ClientIpResult {
+  // Test IP header only allowed in non-production (for Playwright tests)
+  const isProduction = process.env.VERCEL_ENV === "production";
+  if (!isProduction) {
+    // Check if x-test-client-ip header is present (even if empty)
+    const testIpHeader = request.headers.get("x-test-client-ip");
+    if (testIpHeader !== null) {
+      const trimmedTestIp = testIpHeader.trim();
+      if (trimmedTestIp && isIP(trimmedTestIp)) {
+        return { ip: trimmedTestIp };
+      }
+      return { ip: null, error: "Invalid test client IP" };
+    }
+  }
+
   // x-real-ip is set by Vercel to the true client IP
   const realIp = request.headers.get("x-real-ip");
   if (realIp) {
-    return realIp.trim();
+    const trimmedRealIp = realIp.trim();
+    if (isIP(trimmedRealIp)) {
+      return { ip: trimmedRealIp };
+    }
   }
+
   // Fallback to first entry in x-forwarded-for (set by Vercel's edge)
   const forwarded = request.headers.get("x-forwarded-for");
   if (forwarded) {
-    return forwarded.split(",")[0]?.trim() || "unknown";
+    const firstIp = forwarded.split(",")[0]?.trim();
+    if (firstIp && isIP(firstIp)) {
+      return { ip: firstIp };
+    }
   }
-  return "unknown";
+
+  return { ip: null, error: "No valid client IP header found" };
 }
 
 function checkRateLimit(key: string): { allowed: boolean; retryAfter?: number } {
@@ -102,6 +129,10 @@ interface ValidationResult {
   isHoneypot?: boolean;
 }
 
+function stripDisallowedControlChars(value: string): string {
+  return value.replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, "");
+}
+
 function validateSubmission(data: unknown): ValidationResult {
   if (!data || typeof data !== "object") {
     return { valid: false, error: "Invalid request body" };
@@ -137,15 +168,17 @@ function validateSubmission(data: unknown): ValidationResult {
   }
 
   // Validate and sanitize optional fields
-  // Limits aligned with backend contract: headache 2000, UTM 200
-  const role = typeof submission.role === "string" ? submission.role.trim().slice(0, 100) : undefined;
-  const organization = typeof submission.organization === "string" ? submission.organization.trim().slice(0, 200) : undefined;
-  const region = typeof submission.region === "string" ? submission.region.trim().slice(0, 100) : undefined;
-  const headache = typeof submission.headache === "string" ? submission.headache.trim().slice(0, 2000) : undefined;
-  const source_page = typeof submission.source_page === "string" ? submission.source_page.trim().slice(0, 500) : undefined;
-  const utm_source = typeof submission.utm_source === "string" ? submission.utm_source.trim().slice(0, 200) : undefined;
-  const utm_medium = typeof submission.utm_medium === "string" ? submission.utm_medium.trim().slice(0, 200) : undefined;
-  const utm_campaign = typeof submission.utm_campaign === "string" ? submission.utm_campaign.trim().slice(0, 200) : undefined;
+  // Strip disallowed control characters (U+0000-U+0008, U+000B, U+000C, U+000E-U+001F) before trim/truncate
+  // Tab, LF, and CR are allowed
+  // Limits aligned with backend contract: role/region 100, organization/UTM 200, source_page 500, headache 2000
+  const role = typeof submission.role === "string" ? stripDisallowedControlChars(submission.role).trim().slice(0, 100) : undefined;
+  const organization = typeof submission.organization === "string" ? stripDisallowedControlChars(submission.organization).trim().slice(0, 200) : undefined;
+  const region = typeof submission.region === "string" ? stripDisallowedControlChars(submission.region).trim().slice(0, 100) : undefined;
+  const headache = typeof submission.headache === "string" ? stripDisallowedControlChars(submission.headache).trim().slice(0, 2000) : undefined;
+  const source_page = typeof submission.source_page === "string" ? stripDisallowedControlChars(submission.source_page).trim().slice(0, 500) : undefined;
+  const utm_source = typeof submission.utm_source === "string" ? stripDisallowedControlChars(submission.utm_source).trim().slice(0, 200) : undefined;
+  const utm_medium = typeof submission.utm_medium === "string" ? stripDisallowedControlChars(submission.utm_medium).trim().slice(0, 200) : undefined;
+  const utm_campaign = typeof submission.utm_campaign === "string" ? stripDisallowedControlChars(submission.utm_campaign).trim().slice(0, 200) : undefined;
   // Phase 1: No marketing consent checkbox on form, so consent is always false
   // Do not send consent=true without an approved consent_text_version
   const consent = false;
@@ -321,15 +354,22 @@ async function sendToAws(data: WaitlistSubmission, request: NextRequest): Promis
     return { success: false, error: "AWS not configured" };
   }
 
+  // Get trusted client IP from hosting platform headers
+  const clientIpResult = getClientIp(request);
+  if (!clientIpResult.ip) {
+    console.error("[WAITLIST] Missing or invalid client IP:", clientIpResult.error);
+    return { success: false, error: "Missing or invalid client IP", statusCode: 400 };
+  }
+
   try {
-    // Get trusted client IP from hosting platform headers
-    const clientIp = getClientIp(request);
-    const userAgent = request.headers.get("user-agent") || "";
+    // Truncate user-agent to 512 characters per backend contract
+    const rawUserAgent = request.headers.get("user-agent") || "";
+    const userAgent = rawUserAgent.slice(0, 512);
 
     const headers: Record<string, string> = {
       "Content-Type": "application/json",
       "x-waitlist-secret": awsSecret,
-      "X-Waitlist-Client-IP": clientIp,
+      "X-Waitlist-Client-IP": clientIpResult.ip,
     };
 
     // Only add user-agent header if present
