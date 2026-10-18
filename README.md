@@ -115,9 +115,38 @@ The webhook receives a POST with JSON:
 }
 ```
 
+#### AWS (API Gateway + Lambda + DynamoDB)
+
+```env
+EMAIL_PROVIDER=aws
+WAITLIST_AWS_URL=https://xxxxxxxxxx.execute-api.us-east-1.amazonaws.com/prod/waitlist
+WAITLIST_AWS_SECRET=your-secret-key
+```
+
+The AWS provider POSTs JSON to Jay's backend (API Gateway → Lambda → DynamoDB, with SES double opt-in):
+
+```json
+{
+  "email": "user@example.com",
+  "role": "cemetery_manager",
+  "organization": "Example Cemetery",
+  "region": "Texas",
+  "headache": "Tracking pre-need payments",
+  "source_page": "/contracts",
+  "utm_source": "google",
+  "utm_medium": "cpc",
+  "utm_campaign": "cemetery-software",
+  "consent": true,
+  "consent_text_version": "v1"
+}
+```
+
+The request includes an `x-waitlist-secret` header for authentication. Any 2xx response is treated as success.
+
 #### Fallback Behavior
 
-If no provider is configured, signups are logged to the server console. This is fine for development but not recommended for production.
+- **Development/preview:** Signups are logged to the server console (without email addresses) and return success.
+- **Production (`VERCEL_ENV=production`):** If no provider is configured, returns 503 with "Signups are temporarily unavailable. Please email contact@eternaguard.com". This prevents fake success messages when leads would be lost.
 
 ### Analytics
 

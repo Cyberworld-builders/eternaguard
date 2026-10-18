@@ -67,12 +67,17 @@ Provider configuration via environment variables:
 
 | Provider | Variables |
 |----------|-----------|
+| AWS | `WAITLIST_AWS_URL`, `WAITLIST_AWS_SECRET` |
 | Resend | `RESEND_API_KEY`, `RESEND_AUDIENCE_ID` |
 | Mailchimp | `MAILCHIMP_API_KEY`, `MAILCHIMP_LIST_ID`, `MAILCHIMP_DC` |
 | ConvertKit | `CONVERTKIT_API_KEY`, `CONVERTKIT_FORM_ID` |
 | Webhook | `WAITLIST_WEBHOOK_URL` |
 
-Set `EMAIL_PROVIDER` to force a specific provider, or let the API auto-detect from available credentials. If nothing is configured, signups log to console.
+Set `EMAIL_PROVIDER` to force a specific provider, or let the API auto-detect from available credentials.
+
+**Production behavior:** If no provider is configured and `VERCEL_ENV=production`, returns 503 with "Signups are temporarily unavailable. Please email contact@eternaguard.com" — no fake success messages.
+
+**Development behavior:** If no provider is configured, logs submission metadata (without email addresses) to console and returns success.
 
 Analytics: Set `NEXT_PUBLIC_GA_ID` for Google Analytics.
 
