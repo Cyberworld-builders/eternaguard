@@ -78,18 +78,10 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-slate-500 text-sm">
+        <div className="border-t border-slate-800 pt-8">
+          <p className="text-slate-500 text-sm text-center md:text-left">
             © {new Date().getFullYear()} EternaGuard. All rights reserved.
           </p>
-          <div className="flex gap-6 text-sm">
-            <Link href="/privacy" className="text-slate-500 hover:text-emerald-400 transition-colors">
-              Privacy
-            </Link>
-            <Link href="/terms" className="text-slate-500 hover:text-emerald-400 transition-colors">
-              Terms
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
